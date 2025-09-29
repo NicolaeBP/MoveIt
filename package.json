@@ -1,0 +1,141 @@
+{
+  "name": "moveit",
+  "version": "1.0.0",
+  "description": "A modern Electron + React app that moves your mouse to prevent system sleep",
+  "author": "Nicolae Balica",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/main.js",
+  "homepage": "https://github.com/NicolaeBP/MoveIt",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NicolaeBP/MoveIt.git"
+  },
+  "scripts": {
+    "dev": "npm run build:electron && concurrently -k \"npm run dev:react-devtools\" \"npm run dev:vite\" \"npm run dev:electron\"",
+    "dev:vite": "vite",
+    "dev:electron": "wait-on tcp:5173 && cross-env NODE_ENV=development electron dist/main.js",
+    "dev:react-devtools": "react-devtools",
+    "clean": "rm -rf dist/ release/ node_modules/.cache node_modules/.vite",
+    "build:mac": "npm run clean && npm run build:vite && npm run build:electron && npm run package:mac",
+    "build:mac:nosign": "npm run clean && npm run build:vite && npm run build:electron && CSC_IDENTITY_AUTO_DISCOVERY=false npm run package:mac",
+    "build:win": "npm run clean && npm run build:vite && npm run build:electron && npm run package:win",
+    "build:all": "npm run clean && npm run build:vite && npm run build:electron && npm run package:win && npm run package:mac",
+    "build:vite": "vite build",
+    "build:electron": "tsx scripts/build-electron.ts",
+    "package": "cross-env NODE_NO_WARNINGS=1 electron-builder",
+    "package:win": "cross-env NODE_NO_WARNINGS=1 electron-builder --win",
+    "package:mac": "cross-env NODE_NO_WARNINGS=1 electron-builder --mac",
+    "package:linux": "cross-env NODE_NO_WARNINGS=1 electron-builder --linux",
+    "preview": "vite preview",
+    "lint": "eslint src scripts electron --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint:fix": "eslint src scripts electron --ext ts,tsx --fix",
+    "type-check": "tsc --noEmit && tsc --project tsconfig.node.json --noEmit",
+    "type-check:src": "tsc --noEmit",
+    "type-check:electron": "tsc --project tsconfig.node.json --noEmit",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"scripts/**/*.ts\" \"electron/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"scripts/**/*.ts\" \"electron/**/*.ts\"",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@nut-tree-fork/nut-js": "^4.2.6",
+    "electron-store": "^10.1.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-intl": "^7.1.11",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@electron/notarize": "^3.1.0",
+    "@eslint/js": "^9.36.0",
+    "@formatjs/cli": "^6.7.2",
+    "@tailwindcss/postcss": "^4.1.13",
+    "@types/node": "^24.5.2",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "@typescript-eslint/eslint-plugin": "^8.44.0",
+    "@typescript-eslint/parser": "^8.44.0",
+    "@vitejs/plugin-react": "^5.0.2",
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.0.0",
+    "electron": "^38.1.0",
+    "electron-builder": "^26.0.12",
+    "esbuild": "^0.25.9",
+    "eslint": "^9.35.0",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.6",
+    "postcss": "^8.5.6",
+    "prettier": "^3.6.2",
+    "react-devtools": "^6.1.5",
+    "rollup-plugin-visualizer": "^6.0.3",
+    "tailwindcss": "^4.1.13",
+    "terser": "^5.44.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.5",
+    "wait-on": "^9.0.0"
+  },
+  "build": {
+    "appId": "com.nicolaebalica.moveit",
+    "productName": "MoveIt",
+    "executableName": "MoveIt",
+    "afterSign": "scripts/notarize.cjs",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**/*",
+      "assets/**/*",
+      "package.json",
+      "node_modules/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.utilities",
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "assets/icon.icns",
+      "hardenedRuntime": true,
+      "gatekeeperAssess": false,
+      "entitlements": "entitlements.mac.plist",
+      "entitlementsInherit": "entitlements.mac.plist",
+      "identity": "Nicolae Balica (72Z547BVVA)"
+    },
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "${productName} Setup ${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "MoveIt"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix --max-warnings 0",
+      "prettier --write"
+    ]
+  }
+}

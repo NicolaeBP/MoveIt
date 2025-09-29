@@ -1,0 +1,69 @@
+@import 'tailwindcss';
+
+/* Tailwind v4 dark mode configuration */
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-family-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+
+  --animate-mouse-move: mousemove 2s ease-in-out infinite;
+  --animate-pulse-status: pulsestatus 2s ease-in-out infinite;
+  --animate-fade-in: fadein 0.3s ease-in-out;
+}
+
+@keyframes mousemove {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes pulsestatus {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+@keyframes fadein {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-mouse-move {
+  animation: var(--animate-mouse-move);
+}
+
+.animate-pulse-status {
+  animation: var(--animate-pulse-status);
+}
+
+.animate-fade-in {
+  animation: var(--animate-fade-in);
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+.drag-region button {
+  cursor: pointer;
+}

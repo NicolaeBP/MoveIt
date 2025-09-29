@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' http://localhost:8097; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' http://localhost:* ws://localhost:*;">
+    <meta name="description" content="MoveIt - Keep your system active intelligently" />
+    <title>MoveIt</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    <!-- React DevTools connection (development only) -->
+    <script>
+      if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+        const devToolsScript = document.createElement('script');
+        devToolsScript.src = 'http://localhost:8097';
+
+        document.head.appendChild(devToolsScript);
+      }
+    </script>
+  </body>
+</html>
