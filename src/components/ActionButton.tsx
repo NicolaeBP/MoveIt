@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useAppStore } from '@/store/useAppStore';
 import AccessibilityModalContent from '@/components/AccessibilityModalContent';
@@ -9,9 +9,10 @@ const ActionButton = () => {
   const scheduleEnabled = useAppStore((state) => state.scheduleEnabled);
   const openModal = useAppStore((state) => state.openModal);
   const closeModal = useAppStore((state) => state.closeModal);
+  const movementStatus = useAppStore((state) => state.movementStatus);
 
   const [isToggling, setIsToggling] = useState(false);
-  const [isRunning, setIsRunning] = useState(false);
+  const isRunning = movementStatus !== 'stopped';
 
   const mouseMoverAPI = window.electronAPI?.mouseMover;
 
@@ -64,12 +65,6 @@ const ActionButton = () => {
       setIsToggling(false);
     }
   };
-
-  useEffect(() => {
-    return mouseMoverAPI?.onRunningStateChanged?.((status: 'moving' | 'waiting' | 'stopped') => {
-      setIsRunning(status === 'moving' || status === 'waiting');
-    });
-  }, [mouseMoverAPI]);
 
   return (
     <button

@@ -10,8 +10,10 @@ const TimeSettings = () => {
 
   const interval = useAppStore((state) => state.interval);
   const setInterval = useAppStore((state) => state.setInterval);
+  const movementStatus = useAppStore((state) => state.movementStatus);
 
   const [inputValue, setInputValue] = useState('');
+  const isDisabled = movementStatus !== 'stopped';
 
   const inputStyles = interval
     ? 'border-gray-300 dark:border-gray-600 focus:border-indigo-500 dark:focus:border-indigo-400 focus:bg-white dark:focus:bg-gray-600 focus:shadow-lg focus:shadow-indigo-500/10'
@@ -88,8 +90,9 @@ const TimeSettings = () => {
         value={inputValue}
         onChange={handleIntervalChange}
         onBlur={handleInputBlur}
+        disabled={isDisabled}
         placeholder={intl.formatMessage({ id: 'timeSettings.placeholder' })}
-        className={`flex-1 px-4 py-3 pr-10 border-2 rounded-lg text-base transition-all duration-300 bg-gray-50 dark:bg-gray-700 dark:text-gray-200 focus:outline-none ${inputStyles}`}
+        className={`flex-1 px-4 py-3 pr-10 border-2 rounded-lg text-base transition-all duration-300 bg-gray-50 dark:bg-gray-700 dark:text-gray-200 focus:outline-none ${inputStyles} ${isDisabled ? 'opacity-50 cursor-not-allowed' : ''}`}
         aria-describedby="time-examples"
       />
 

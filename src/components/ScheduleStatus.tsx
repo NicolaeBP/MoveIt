@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useAppStore } from '@/store/useAppStore';
 
@@ -7,10 +6,7 @@ const ScheduleStatus = () => {
 
   const scheduleConfig = useAppStore((state) => state.scheduleConfig);
   const scheduleEnabled = useAppStore((state) => state.scheduleEnabled);
-
-  const [status, setStatus] = useState<'moving' | 'waiting' | 'stopped'>('stopped');
-
-  const mouseMoverAPI = window.electronAPI?.mouseMover;
+  const status = useAppStore((state) => state.movementStatus);
 
   const wrapperDynamicStyles =
     status === 'moving'
@@ -26,12 +22,6 @@ const ScheduleStatus = () => {
 
     return 'schedule.status.stopped';
   };
-
-  useEffect(() => {
-    return mouseMoverAPI?.onRunningStateChanged?.((newStatus: 'moving' | 'waiting' | 'stopped') => {
-      setStatus(newStatus);
-    });
-  }, [mouseMoverAPI]);
 
   if (!scheduleEnabled) return null;
 

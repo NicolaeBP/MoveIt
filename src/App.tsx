@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { IntlProvider } from 'react-intl';
 import WindowControls from '@/components/WindowControls';
 import AppHeader from '@/components/AppHeader';
@@ -8,47 +7,13 @@ import ActionButton from '@/components/ActionButton';
 import ScheduleStatus from '@/components/ScheduleStatus';
 import ScheduleSettings from '@/components/ScheduleSettings';
 import Modal from '@/components/Modal';
+import { useAppInitialization } from '@/hooks/useAppInitialization';
 import { useLocaleStore } from '@/store/useLocaleStore';
-import { useThemeStore } from '@/store/useThemeStore';
 import { messages } from '@/i18n/config';
 
 const App = () => {
-  const [isInitialized, setIsInitialized] = useState(false);
   const locale = useLocaleStore((state) => state.locale);
-  const initializeLocale = useLocaleStore((state) => state.initializeLocale);
-  const initializeTheme = useThemeStore((state) => state.initializeTheme);
-  const subscribeToSystemTheme = useThemeStore((state) => state.subscribeToSystemTheme);
-  const resolvedTheme = useThemeStore((state) => (state.theme === 'auto' ? state.systemTheme : state.theme));
-
-  useEffect(() => {
-    (async () => {
-      await Promise.all([initializeLocale(), initializeTheme()]);
-      setIsInitialized(true);
-    })();
-
-    const unsubscribe = subscribeToSystemTheme();
-
-    return () => {
-      if (unsubscribe) unsubscribe();
-    };
-  }, [initializeLocale, initializeTheme, subscribeToSystemTheme]);
-
-  useEffect(() => {
-    const root = document.documentElement;
-
-    if (resolvedTheme === 'dark') {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
-  }, [resolvedTheme]);
-
-  useEffect(() => {
-    const handleContextMenu = (e: MouseEvent) => e.preventDefault();
-    document.addEventListener('contextmenu', handleContextMenu);
-
-    return () => document.removeEventListener('contextmenu', handleContextMenu);
-  }, []);
+  const { isInitialized } = useAppInitialization();
 
   if (!isInitialized) return null;
 

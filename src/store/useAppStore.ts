@@ -7,18 +7,22 @@ import { DEFAULT_INTERVAL_MS, MS_PER_MINUTE } from '@/constants/timeConstants';
 
 const MAX_INTERVAL_MS = 24 * 60 * MS_PER_MINUTE;
 
+type MovementStatus = 'moving' | 'waiting' | 'stopped';
+
 interface AppStore {
   interval: number;
   modalContent: ModalContent | null;
   scheduleConfig: ScheduleConfig;
   scheduleEnabled: boolean;
   showTrayMessage: boolean;
+  movementStatus: MovementStatus;
   setInterval: (interval: number) => void;
   openModal: (content: ModalContent) => void;
   closeModal: () => void;
   updateDaySchedule: (day: WeekDay, timeRanges: Array<{ start: string; end: string }>) => void;
   setScheduleEnabled: (enabled: boolean) => void;
   setShowTrayMessage: (show: boolean) => void;
+  setMovementStatus: (status: 'moving' | 'waiting' | 'stopped') => void;
 }
 
 export const useAppStore = create<AppStore>()(
@@ -29,6 +33,7 @@ export const useAppStore = create<AppStore>()(
       scheduleConfig: [],
       scheduleEnabled: false,
       showTrayMessage: true,
+      movementStatus: 'stopped' as 'moving' | 'waiting' | 'stopped',
 
       setInterval: (interval) => set({ interval }),
       openModal: (content) => set({ modalContent: content }),
@@ -39,6 +44,7 @@ export const useAppStore = create<AppStore>()(
         })),
       setScheduleEnabled: (enabled) => set({ scheduleEnabled: enabled }),
       setShowTrayMessage: (show) => set({ showTrayMessage: show }),
+      setMovementStatus: (status) => set({ movementStatus: status }),
     }),
     {
       name: 'moveit-storage',

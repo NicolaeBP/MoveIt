@@ -18,9 +18,10 @@ const ScheduleSettings = () => {
   const scheduleEnabled = useAppStore((state) => state.scheduleEnabled);
   const updateDaySchedule = useAppStore((state) => state.updateDaySchedule);
   const setScheduleEnabled = useAppStore((state) => state.setScheduleEnabled);
+  const movementStatus = useAppStore((state) => state.movementStatus);
 
   const [isExpanded, setIsExpanded] = useState(false);
-  const [isRunning, setIsRunning] = useState(false);
+  const isRunning = movementStatus !== 'stopped';
 
   const currentDay = getCurrentWeekDay();
 
@@ -36,8 +37,6 @@ const ScheduleSettings = () => {
     validationError,
   } = useScheduleEditor();
 
-  const mouseMoverAPI = window.electronAPI?.mouseMover;
-
   const handleToggleDay = (day: WeekDay) => {
     const entries = getDayEntries(scheduleConfig, day);
 
@@ -52,12 +51,6 @@ const ScheduleSettings = () => {
   const handleEditDay = (day: WeekDay) => startEditing(day, getDayEntries(scheduleConfig, day));
 
   const handleScheduleToggle = () => setScheduleEnabled(!scheduleEnabled);
-
-  useEffect(() => {
-    return mouseMoverAPI?.onRunningStateChanged?.((status: 'moving' | 'waiting' | 'stopped') => {
-      setIsRunning(status === 'moving' || status === 'waiting');
-    });
-  }, [mouseMoverAPI]);
 
   useEffect(() => {
     if (isRunning) cancelEditing();
