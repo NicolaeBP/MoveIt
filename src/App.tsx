@@ -22,7 +22,7 @@ const App = () => {
       <main className="flex flex-col select-none w-full h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-900 dark:to-gray-800 relative">
         <WindowControls />
 
-        <section className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-hide p-8 pt-0">
+        <section className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-hide px-8">
           <AppHeader />
 
           <TimeSettings />

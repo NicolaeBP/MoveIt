@@ -15,7 +15,7 @@ export const DEV_SERVER_PORT = 5173;
 export const APP_CONFIG = {
   WINDOW_DIMENSIONS: {
     width: 420,
-    height: 530,
+    height: 555,
   },
   DEVELOPMENT_URL: `http://localhost:${DEV_SERVER_PORT}`,
 } as const;

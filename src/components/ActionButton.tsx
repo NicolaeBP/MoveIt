@@ -56,7 +56,7 @@ const ActionButton = () => {
 
     try {
       const wasStarting = !isRunning;
-      const wasToggleSuccessful = await mouseMoverAPI.toggle(interval, scheduleConfig);
+      const wasToggleSuccessful = await mouseMoverAPI.toggle(interval, scheduleEnabled ? scheduleConfig : []);
 
       if (!wasToggleSuccessful && wasStarting) openModal(accessibilityModalConfig);
     } catch (error) {
