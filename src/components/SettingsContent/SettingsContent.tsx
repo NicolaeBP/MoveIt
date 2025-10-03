@@ -1,8 +1,8 @@
 import { FormattedMessage } from 'react-intl';
 import { useAppStore } from '@/store/useAppStore';
-import LanguageSwitcher from '@/components/LanguageSwitcher';
-import ThemeSelector from '@/components/ThemeSelector';
-import AboutSection from '@/components/AboutSection';
+import LanguageSwitcher from '@/components/LanguageSwitcher/LanguageSwitcher';
+import ThemeSelector from '@/components/ThemeSelector/ThemeSelector';
+import AboutSection from '@/components/AboutSection/AboutSection';
 
 const SettingsContent = () => {
   const showTrayMessage = useAppStore((state) => state.showTrayMessage);

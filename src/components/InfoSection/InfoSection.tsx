@@ -1,6 +1,6 @@
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useAppStore } from '@/store/useAppStore';
-import InfoModalContent from '@/components/InfoModalContent';
+import InfoModal from './InfoModal';
 
 const InfoSection = () => {
   const intl = useIntl();
@@ -10,7 +10,7 @@ const InfoSection = () => {
   const handleOpenInfo = () => {
     openModal({
       title: <FormattedMessage id="infoModal.title" />,
-      body: <InfoModalContent />,
+      body: <InfoModal />,
     });
   };
 

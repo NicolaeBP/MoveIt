@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useAppStore } from '@/store/useAppStore';
-import AccessibilityModalContent from '@/components/AccessibilityModalContent';
+import AccessibilityModal from './AccessibilityModal';
 
 const ActionButton = () => {
   const interval = useAppStore((state) => state.interval);
@@ -25,7 +25,7 @@ const ActionButton = () => {
 
   const accessibilityModalConfig = {
     title: <FormattedMessage id="accessibility.title" />,
-    body: <AccessibilityModalContent />,
+    body: <AccessibilityModal />,
     footer: (
       <div className="flex gap-3">
         <button

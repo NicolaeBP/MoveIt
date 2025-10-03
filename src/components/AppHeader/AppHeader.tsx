@@ -1,6 +1,6 @@
 import { useIntl, FormattedMessage } from 'react-intl';
 import { useAppStore } from '@/store/useAppStore';
-import SettingsContent from '@/components/SettingsContent';
+import SettingsContent from '@/components/SettingsContent/SettingsContent';
 
 const AppHeader = () => {
   const intl = useIntl();

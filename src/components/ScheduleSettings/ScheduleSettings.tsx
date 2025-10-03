@@ -2,11 +2,10 @@ import { useState, useEffect } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { useAppStore } from '@/store/useAppStore';
 import { getCurrentWeekDay } from '@/utils/timeUtils';
-import { useScheduleEditor } from '@/hooks/useScheduleEditor';
-import ScheduleToggle from './ScheduleToggle';
-import DayScheduleList from './DayScheduleList';
-
-import ScheduleEditor from './ScheduleEditor';
+import { useScheduleEditor } from './useScheduleEditor';
+import ScheduleToggle from './ScheduleToggle/ScheduleToggle';
+import DayScheduleList from './DayScheduleList/DayScheduleList';
+import ScheduleEditor from './ScheduleEditor/ScheduleEditor';
 import type { WeekDay } from '@shared/types';
 import { getDayEntries } from '@/utils/scheduleUtils';
 import { DEFAULT_START_TIME, DEFAULT_END_TIME, MAX_TIME_RANGES_PER_DAY } from '@/constants/timeConstants';

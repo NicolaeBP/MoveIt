@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { ModalContent } from '@/components/Modal';
+import type { ModalContent } from '@/components/Modal/Modal';
 import type { ScheduleConfig, WeekDay } from '@shared/types';
 import { updateDaySchedule } from '@/utils/scheduleUtils';
 import { DEFAULT_INTERVAL_MS, MS_PER_MINUTE } from '@/constants/timeConstants';
