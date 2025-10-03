@@ -9,7 +9,7 @@ const MAX_INTERVAL_MS = 24 * 60 * MS_PER_MINUTE;
 
 type MovementStatus = 'moving' | 'waiting' | 'stopped';
 
-interface AppStore {
+export interface AppStore {
   interval: number;
   modalContent: ModalContent | null;
   scheduleConfig: ScheduleConfig;
