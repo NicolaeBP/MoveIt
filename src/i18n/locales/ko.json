@@ -6,6 +6,7 @@
   "settings.maxIdleTime.description": "유휴 감지를 위한 최대 기간 설정",
   "settings.done": "완료",
   "settings.language": "언어",
+  "settings.language.aria": "Language selection",
   "time.5minutes": "5분",
   "time.10minutes": "10분",
   "time.15minutes": "15분",
@@ -76,6 +77,8 @@
   "schedule.crossesMidnight": "시간 범위가 자정을 넘을 수 없습니다. 두 개의 별도 범위로 나누어 주세요.",
   "schedule.removeTimeRange": "제거",
   "schedule.toggle": "일정 전환",
+  "schedule.expand": "Expand schedule",
+  "schedule.collapse": "Collapse schedule",
   "schedule.startTime": "시작 시간",
   "schedule.endTime": "종료 시간",
   "schedule.status.running": "실행 중",
@@ -90,6 +93,9 @@
   "days.saturday": "토요일",
   "days.sunday": "일요일",
   "links.github": "https://github.com/NicolaeBP/MoveIt",
+  "window.minimize": "Minimize window",
+  "window.maximize": "Maximize window",
+  "window.hideToTray": "Hide to tray",
   "windowControls.trayNotification": "앱이 시스템 트레이로 최소화되었습니다",
   "settings.showTrayMessage": "트레이로 최소화할 때 알림 표시"
 }

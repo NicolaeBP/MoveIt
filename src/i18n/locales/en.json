@@ -6,6 +6,7 @@
   "settings.maxIdleTime.description": "Set the maximum duration for idle detection",
   "settings.done": "Done",
   "settings.language": "Language",
+  "settings.language.aria": "Language selection",
   "time.5minutes": "5 minutes",
   "time.10minutes": "10 minutes",
   "time.15minutes": "15 minutes",
@@ -78,6 +79,8 @@
   "schedule.crossesMidnight": "Time ranges cannot cross midnight. Please split into two separate ranges.",
   "schedule.removeTimeRange": "Remove",
   "schedule.toggle": "Toggle schedule",
+  "schedule.expand": "Expand schedule",
+  "schedule.collapse": "Collapse schedule",
   "schedule.startTime": "Start time",
   "schedule.endTime": "End time",
   "schedule.status.running": "Running",
@@ -92,6 +95,9 @@
   "days.saturday": "Saturday",
   "days.sunday": "Sunday",
   "links.github": "https://github.com/NicolaeBP/MoveIt",
+  "window.minimize": "Minimize window",
+  "window.maximize": "Maximize window",
+  "window.hideToTray": "Hide to tray",
   "windowControls.trayNotification": "App minimized to system tray",
   "settings.showTrayMessage": "Show notification when minimizing to tray"
 }

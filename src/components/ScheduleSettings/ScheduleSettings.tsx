@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { useAppStore } from '@/store/useAppStore';
 import { getCurrentWeekDay } from '@/utils/timeUtils';
 import { useScheduleEditor } from './useScheduleEditor';
@@ -13,6 +13,7 @@ import { DEFAULT_START_TIME, DEFAULT_END_TIME, MAX_TIME_RANGES_PER_DAY } from '@
 const weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'] as const;
 
 const ScheduleSettings = () => {
+  const intl = useIntl();
   const scheduleConfig = useAppStore((state) => state.scheduleConfig);
   const scheduleEnabled = useAppStore((state) => state.scheduleEnabled);
   const updateDaySchedule = useAppStore((state) => state.updateDaySchedule);
@@ -66,7 +67,7 @@ const ScheduleSettings = () => {
             <button
               onClick={() => setIsExpanded((prev) => !prev)}
               className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
-              aria-label={isExpanded ? 'Collapse schedule' : 'Expand schedule'}
+              aria-label={intl.formatMessage({ id: isExpanded ? 'schedule.collapse' : 'schedule.expand' })}
             >
               <svg
                 className={`w-4 h-4 text-gray-500 dark:text-gray-400 transform transition-transform ${isExpanded ? 'rotate-90' : ''}`}

@@ -6,6 +6,7 @@
   "settings.maxIdleTime.description": "Legen Sie die maximale Dauer für die Leerlauferkennung fest",
   "settings.done": "Fertig",
   "settings.language": "Sprache",
+  "settings.language.aria": "Language selection",
   "time.5minutes": "5 Minuten",
   "time.10minutes": "10 Minuten",
   "time.15minutes": "15 Minuten",
@@ -78,6 +79,8 @@
   "schedule.crossesMidnight": "Zeitbereiche können nicht über Mitternacht gehen. Bitte teilen Sie sie in zwei separate Bereiche auf.",
   "schedule.removeTimeRange": "Entfernen",
   "schedule.toggle": "Zeitplan umschalten",
+  "schedule.expand": "Expand schedule",
+  "schedule.collapse": "Collapse schedule",
   "schedule.startTime": "Startzeit",
   "schedule.endTime": "Endzeit",
   "schedule.status.running": "Läuft",
@@ -92,6 +95,9 @@
   "days.saturday": "Samstag",
   "days.sunday": "Sonntag",
   "links.github": "https://github.com/NicolaeBP/MoveIt",
+  "window.minimize": "Minimize window",
+  "window.maximize": "Maximize window",
+  "window.hideToTray": "Hide to tray",
   "windowControls.trayNotification": "Anwendung in die Systemleiste minimiert",
   "settings.showTrayMessage": "Benachrichtigung anzeigen beim Minimieren in die Systemleiste"
 }

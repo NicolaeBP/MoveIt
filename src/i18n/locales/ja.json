@@ -6,6 +6,7 @@
   "settings.maxIdleTime.description": "アイドル検出の最大期間を設定",
   "settings.done": "完了",
   "settings.language": "言語",
+  "settings.language.aria": "Language selection",
   "time.5minutes": "5分",
   "time.10minutes": "10分",
   "time.15minutes": "15分",
@@ -78,6 +79,8 @@
   "schedule.crossesMidnight": "時間範囲は深夜をまたぐことはできません。２つの別々の範囲に分けてください。",
   "schedule.removeTimeRange": "削除",
   "schedule.toggle": "スケジュール切替",
+  "schedule.expand": "Expand schedule",
+  "schedule.collapse": "Collapse schedule",
   "schedule.startTime": "開始時間",
   "schedule.endTime": "終了時間",
   "schedule.status.running": "実行中",
@@ -92,6 +95,9 @@
   "days.saturday": "土曜日",
   "days.sunday": "日曜日",
   "links.github": "https://github.com/NicolaeBP/MoveIt",
+  "window.minimize": "Minimize window",
+  "window.maximize": "Maximize window",
+  "window.hideToTray": "Hide to tray",
   "windowControls.trayNotification": "アプリがシステムトレイに最小化されました",
   "settings.showTrayMessage": "トレイに最小化するときに通知を表示"
 }

@@ -6,6 +6,7 @@
   "settings.maxIdleTime.description": "Установите максимальную продолжительность обнаружения простоя",
   "settings.done": "Готово",
   "settings.language": "Язык",
+  "settings.language.aria": "Language selection",
   "time.5minutes": "5 минут",
   "time.10minutes": "10 минут",
   "time.15minutes": "15 минут",
@@ -78,6 +79,8 @@
   "schedule.crossesMidnight": "Временные диапазоны не могут пересекать полночь. Пожалуйста, разделите на два отдельных диапазона.",
   "schedule.removeTimeRange": "Удалить",
   "schedule.toggle": "Переключить расписание",
+  "schedule.expand": "Expand schedule",
+  "schedule.collapse": "Collapse schedule",
   "schedule.startTime": "Время начала",
   "schedule.endTime": "Время окончания",
   "schedule.status.running": "Выполняется",
@@ -92,6 +95,9 @@
   "days.saturday": "Суббота",
   "days.sunday": "Воскресенье",
   "links.github": "https://github.com/NicolaeBP/MoveIt",
+  "window.minimize": "Minimize window",
+  "window.maximize": "Maximize window",
+  "window.hideToTray": "Hide to tray",
   "windowControls.trayNotification": "Приложение свернуто в системный трей",
   "settings.showTrayMessage": "Показывать уведомление при сворачивании в трей"
 }

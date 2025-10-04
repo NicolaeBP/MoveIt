@@ -6,6 +6,7 @@
   "settings.maxIdleTime.description": "Defina a duração máxima para detecção de inatividade",
   "settings.done": "Concluído",
   "settings.language": "Idioma",
+  "settings.language.aria": "Language selection",
   "time.5minutes": "5 minutos",
   "time.10minutes": "10 minutos",
   "time.15minutes": "15 minutos",
@@ -78,6 +79,8 @@
   "schedule.crossesMidnight": "Os intervalos de tempo não podem cruzar a meia-noite. Por favor, divida em dois intervalos separados.",
   "schedule.removeTimeRange": "Remover",
   "schedule.toggle": "Alternar horário",
+  "schedule.expand": "Expand schedule",
+  "schedule.collapse": "Collapse schedule",
   "schedule.startTime": "Hora de início",
   "schedule.endTime": "Hora de fim",
   "schedule.status.running": "Em execução",
@@ -92,6 +95,9 @@
   "days.saturday": "Sábado",
   "days.sunday": "Domingo",
   "links.github": "https://github.com/NicolaeBP/MoveIt",
+  "window.minimize": "Minimize window",
+  "window.maximize": "Maximize window",
+  "window.hideToTray": "Hide to tray",
   "windowControls.trayNotification": "Aplicação minimizada para a bandeja do sistema",
   "settings.showTrayMessage": "Mostrar notificação ao minimizar para a bandeja"
 }

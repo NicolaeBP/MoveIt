@@ -1,4 +1,5 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
 import { useAppStore } from '@/store/useAppStore';
 
 const DRAG_REGION_STYLE = {
@@ -8,6 +9,7 @@ const DRAG_REGION_STYLE = {
 const NO_DRAG_STYLE = { WebkitAppRegion: 'no-drag' } as React.CSSProperties;
 
 const WindowControls = () => {
+  const intl = useIntl();
   const showTrayMessage = useAppStore((state) => state.showTrayMessage);
 
   const handleWindowAction = async (action: 'minimize' | 'maximize' | 'hideToTray') => {
@@ -27,7 +29,7 @@ const WindowControls = () => {
           onClick={() => handleWindowAction('minimize')}
           className="w-3 h-3 rounded-full bg-amber-400 hover:bg-amber-500 transition-all duration-200 flex items-center justify-center text-[8px] leading-none hover:scale-110"
           style={NO_DRAG_STYLE}
-          aria-label="Minimize window"
+          aria-label={intl.formatMessage({ id: 'window.minimize' })}
         >
           <span className="text-amber-800">−</span>
         </button>
@@ -36,7 +38,7 @@ const WindowControls = () => {
           onClick={() => handleWindowAction('maximize')}
           className="w-3 h-3 rounded-full bg-emerald-400 hover:bg-emerald-500 transition-all duration-200 flex items-center justify-center text-[8px] leading-none hover:scale-110"
           style={NO_DRAG_STYLE}
-          aria-label="Maximize window"
+          aria-label={intl.formatMessage({ id: 'window.maximize' })}
         >
           <span className="text-emerald-800">□</span>
         </button>
@@ -45,7 +47,7 @@ const WindowControls = () => {
           onClick={() => handleWindowAction('hideToTray')}
           className="w-3 h-3 rounded-full bg-rose-400 hover:bg-rose-500 transition-all duration-200 flex items-center justify-center text-[8px] leading-none hover:scale-110"
           style={NO_DRAG_STYLE}
-          aria-label="Hide to tray"
+          aria-label={intl.formatMessage({ id: 'window.hideToTray' })}
         >
           <span className="text-rose-800">×</span>
         </button>

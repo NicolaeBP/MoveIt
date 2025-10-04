@@ -39,7 +39,7 @@ describe('ScheduleSettings', () => {
       render(<ScheduleSettings />, { wrapper });
 
       expect(screen.getByText(messages.en['schedule.title'])).toBeInTheDocument();
-      expect(screen.getByLabelText('Expand schedule')).toBeInTheDocument();
+      expect(screen.getByLabelText(messages.en['schedule.expand'])).toBeInTheDocument();
     });
 
     it('does not show day schedule list', () => {
@@ -53,12 +53,12 @@ describe('ScheduleSettings', () => {
     it('expands and shows schedule details', () => {
       render(<ScheduleSettings />, { wrapper });
 
-      const expandButton = screen.getByLabelText('Expand schedule');
+      const expandButton = screen.getByLabelText(messages.en['schedule.expand']);
 
       fireEvent.click(expandButton);
 
       expect(screen.getByText(messages.en['days.monday'])).toBeInTheDocument();
-      expect(screen.getByLabelText('Collapse schedule')).toBeInTheDocument();
+      expect(screen.getByLabelText(messages.en['schedule.collapse'])).toBeInTheDocument();
     });
   });
 
@@ -85,7 +85,7 @@ describe('ScheduleSettings', () => {
 
       const { rerender } = render(<ScheduleSettings />, { wrapper });
 
-      const expandButton = screen.getByLabelText('Expand schedule');
+      const expandButton = screen.getByLabelText(messages.en['schedule.expand']);
 
       fireEvent.click(expandButton);
 
@@ -102,7 +102,7 @@ describe('ScheduleSettings', () => {
     it('starts editing with default time range', () => {
       render(<ScheduleSettings />, { wrapper });
 
-      const expandButton = screen.getByLabelText('Expand schedule');
+      const expandButton = screen.getByLabelText(messages.en['schedule.expand']);
 
       fireEvent.click(expandButton);
 
@@ -126,7 +126,7 @@ describe('ScheduleSettings', () => {
 
       render(<ScheduleSettings />, { wrapper });
 
-      const expandButton = screen.getByLabelText('Expand schedule');
+      const expandButton = screen.getByLabelText(messages.en['schedule.expand']);
 
       fireEvent.click(expandButton);
 
@@ -146,7 +146,7 @@ describe('ScheduleSettings', () => {
 
       render(<ScheduleSettings />, { wrapper });
 
-      const expandButton = screen.getByLabelText('Expand schedule');
+      const expandButton = screen.getByLabelText(messages.en['schedule.expand']);
 
       fireEvent.click(expandButton);
 

@@ -1,17 +1,24 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { IntlProvider } from 'react-intl';
 import WindowControls from './WindowControls';
 import { useAppStore } from '@/store/useAppStore';
+import { messages } from '@/i18n/config';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <IntlProvider locale="en" messages={messages.en}>
+    {children}
+  </IntlProvider>
+);
 
 describe('WindowControls', () => {
   describe('when component renders', () => {
     it('displays three window control buttons', () => {
-      render(<WindowControls />);
+      render(<WindowControls />, { wrapper });
 
-      // Todo: move all aria labels to translation files and add language translations
-      expect(screen.getByLabelText('Minimize window')).toBeInTheDocument();
-      expect(screen.getByLabelText('Maximize window')).toBeInTheDocument();
-      expect(screen.getByLabelText('Hide to tray')).toBeInTheDocument();
+      expect(screen.getByLabelText(messages.en['window.minimize'])).toBeInTheDocument();
+      expect(screen.getByLabelText(messages.en['window.maximize'])).toBeInTheDocument();
+      expect(screen.getByLabelText(messages.en['window.hideToTray'])).toBeInTheDocument();
     });
   });
 
@@ -27,9 +34,9 @@ describe('WindowControls', () => {
         },
       };
 
-      render(<WindowControls />);
+      render(<WindowControls />, { wrapper });
 
-      const minimizeButton = screen.getByLabelText('Minimize window');
+      const minimizeButton = screen.getByLabelText(messages.en['window.minimize']);
 
       minimizeButton.click();
 
@@ -51,9 +58,9 @@ describe('WindowControls', () => {
         },
       };
 
-      render(<WindowControls />);
+      render(<WindowControls />, { wrapper });
 
-      const maximizeButton = screen.getByLabelText('Maximize window');
+      const maximizeButton = screen.getByLabelText(messages.en['window.maximize']);
 
       maximizeButton.click();
 
@@ -77,9 +84,9 @@ describe('WindowControls', () => {
 
       useAppStore.setState({ showTrayMessage: false });
 
-      render(<WindowControls />);
+      render(<WindowControls />, { wrapper });
 
-      const hideButton = screen.getByLabelText('Hide to tray');
+      const hideButton = screen.getByLabelText(messages.en['window.hideToTray']);
 
       hideButton.click();
 

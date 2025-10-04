@@ -6,6 +6,7 @@
   "settings.maxIdleTime.description": "Setează durata maximă pentru detectarea inactivității",
   "settings.done": "Gata",
   "settings.language": "Limbă",
+  "settings.language.aria": "Selecție limbă",
   "time.5minutes": "5 minute",
   "time.10minutes": "10 minute",
   "time.15minutes": "15 minute",
@@ -78,6 +79,8 @@
   "schedule.crossesMidnight": "Intervalele de timp nu pot trece peste miezul nopții. Vă rugăm să le împărțiți în două intervale separate.",
   "schedule.removeTimeRange": "Elimină",
   "schedule.toggle": "Comutează programul",
+  "schedule.expand": "Extinde programul",
+  "schedule.collapse": "Restrânge programul",
   "schedule.startTime": "Ora de început",
   "schedule.endTime": "Ora de sfârșit",
   "schedule.status.running": "În execuție",
@@ -92,6 +95,9 @@
   "days.saturday": "Sâmbătă",
   "days.sunday": "Duminică",
   "links.github": "https://github.com/NicolaeBP/MoveIt",
+  "window.minimize": "Minimizează fereastra",
+  "window.maximize": "Maximizează fereastra",
+  "window.hideToTray": "Ascunde în bara de sistem",
   "windowControls.trayNotification": "Aplicația a fost minimizată în bara de sistem",
   "settings.showTrayMessage": "Afișează notificare când minimizez în bara de sistem"
 }

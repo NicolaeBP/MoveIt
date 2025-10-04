@@ -6,6 +6,7 @@
   "settings.maxIdleTime.description": "设置空闲检测的最大持续时间",
   "settings.done": "完成",
   "settings.language": "语言",
+  "settings.language.aria": "Language selection",
   "time.5minutes": "5分钟",
   "time.10minutes": "10分钟",
   "time.15minutes": "15分钟",
@@ -78,6 +79,8 @@
   "schedule.crossesMidnight": "时间范围不能跨越午夜。请分成两个单独的范围。",
   "schedule.removeTimeRange": "删除",
   "schedule.toggle": "切换计划",
+  "schedule.expand": "Expand schedule",
+  "schedule.collapse": "Collapse schedule",
   "schedule.startTime": "开始时间",
   "schedule.endTime": "结束时间",
   "schedule.status.running": "运行中",
@@ -92,6 +95,9 @@
   "days.saturday": "星期六",
   "days.sunday": "星期日",
   "links.github": "https://github.com/NicolaeBP/MoveIt",
+  "window.minimize": "Minimize window",
+  "window.maximize": "Maximize window",
+  "window.hideToTray": "Hide to tray",
   "windowControls.trayNotification": "应用程序已最小化到系统托盘",
   "settings.showTrayMessage": "最小化到托盘时显示通知"
 }

@@ -1,17 +1,24 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { IntlProvider } from 'react-intl';
 import LanguageSwitcher from './LanguageSwitcher';
 import { useLocaleStore } from '@/store/useLocaleStore';
-import { localeNames } from '@/i18n/config';
+import { localeNames, messages } from '@/i18n/config';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <IntlProvider locale="en" messages={messages.en}>
+    {children}
+  </IntlProvider>
+);
 
 describe('LanguageSwitcher', () => {
   describe('when component renders', () => {
     it('displays select dropdown with all supported languages', () => {
       useLocaleStore.setState({ locale: 'en' });
 
-      render(<LanguageSwitcher />);
+      render(<LanguageSwitcher />, { wrapper });
 
-      const select = screen.getByLabelText('Language selection');
+      const select = screen.getByLabelText(messages.en['settings.language.aria']);
 
       expect(select).toBeInTheDocument();
 
@@ -23,9 +30,9 @@ describe('LanguageSwitcher', () => {
     it('displays current locale as selected', () => {
       useLocaleStore.setState({ locale: 'fr' });
 
-      render(<LanguageSwitcher />);
+      render(<LanguageSwitcher />, { wrapper });
 
-      const select = screen.getByLabelText('Language selection') as HTMLSelectElement;
+      const select = screen.getByLabelText(messages.en['settings.language.aria']) as HTMLSelectElement;
 
       expect(select.value).toBe('fr');
     });
@@ -37,9 +44,9 @@ describe('LanguageSwitcher', () => {
 
       useLocaleStore.setState({ locale: 'en', setLocale: setLocaleMock });
 
-      render(<LanguageSwitcher />);
+      render(<LanguageSwitcher />, { wrapper });
 
-      const select = screen.getByLabelText('Language selection') as HTMLSelectElement;
+      const select = screen.getByLabelText(messages.en['settings.language.aria']) as HTMLSelectElement;
       select.value = 'es';
       select.dispatchEvent(new Event('change', { bubbles: true }));
 
