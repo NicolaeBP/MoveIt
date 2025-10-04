@@ -1,0 +1,72 @@
+import { describe, it, expect, vi } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import { IntlProvider } from 'react-intl';
+import InfoSection from './InfoSection';
+import { useAppStore } from '@/store/useAppStore';
+import { messages } from '@/i18n/config';
+
+describe('InfoSection', () => {
+  describe('when component renders', () => {
+    it('displays info description', () => {
+      useAppStore.setState({ openModal: vi.fn() });
+
+      render(
+        <IntlProvider locale="en" messages={messages.en}>
+          <InfoSection />
+        </IntlProvider>
+      );
+
+      expect(screen.getByText(messages.en['info.description'])).toBeInTheDocument();
+    });
+
+    it('displays info button', () => {
+      useAppStore.setState({ openModal: vi.fn() });
+
+      render(
+        <IntlProvider locale="en" messages={messages.en}>
+          <InfoSection />
+        </IntlProvider>
+      );
+
+      const button = screen.getByLabelText(messages.en['info.button.aria']);
+
+      expect(button).toBeInTheDocument();
+      expect(button).toHaveTextContent('i');
+    });
+  });
+
+  describe('when info button is clicked', () => {
+    it('opens modal with correct info content', () => {
+      const openModalMock = vi.fn();
+
+      useAppStore.setState({ openModal: openModalMock });
+
+      render(
+        <IntlProvider locale="en" messages={messages.en}>
+          <InfoSection />
+        </IntlProvider>
+      );
+
+      const button = screen.getByLabelText(messages.en['info.button.aria']);
+
+      button.click();
+
+      expect(openModalMock).toHaveBeenCalledTimes(1);
+
+      const modalConfig = openModalMock.mock.calls[0][0];
+
+      render(
+        <IntlProvider locale="en" messages={messages.en}>
+          <div>
+            {modalConfig.title}
+            {modalConfig.body}
+          </div>
+        </IntlProvider>
+      );
+
+      expect(screen.getByText(messages.en['infoModal.title'])).toBeInTheDocument();
+      expect(screen.getByText(messages.en['infoModal.intro'])).toBeInTheDocument();
+      expect(screen.getByText(messages.en['infoModal.smartDetection.title'])).toBeInTheDocument();
+    });
+  });
+});
