@@ -4,17 +4,20 @@ import { IntlProvider } from 'react-intl';
 import ThemeSelector from './ThemeSelector';
 import { useThemeStore } from '@/store/useThemeStore';
 import { messages } from '@/i18n/config';
+import React from 'react';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <IntlProvider locale="en" messages={messages.en}>
+    {children}
+  </IntlProvider>
+);
 
 describe('ThemeSelector', () => {
   describe('when component renders', () => {
     it('displays theme label and theme buttons', () => {
       useThemeStore.setState({ theme: 'light' });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <ThemeSelector />
-        </IntlProvider>
-      );
+      render(<ThemeSelector />, { wrapper });
 
       expect(screen.getByText(messages.en['theme.label'])).toBeInTheDocument();
       expect(screen.getByText(messages.en['theme.light'])).toBeInTheDocument();
@@ -27,11 +30,7 @@ describe('ThemeSelector', () => {
     it('marks light button as pressed', () => {
       useThemeStore.setState({ theme: 'light' });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <ThemeSelector />
-        </IntlProvider>
-      );
+      render(<ThemeSelector />, { wrapper });
 
       const lightButton = screen.getByText(messages.en['theme.light']);
 
@@ -43,11 +42,7 @@ describe('ThemeSelector', () => {
     it('marks dark button as pressed', () => {
       useThemeStore.setState({ theme: 'dark' });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <ThemeSelector />
-        </IntlProvider>
-      );
+      render(<ThemeSelector />, { wrapper });
 
       const darkButton = screen.getByText(messages.en['theme.dark']);
 
@@ -59,11 +54,7 @@ describe('ThemeSelector', () => {
     it('marks auto button as pressed', () => {
       useThemeStore.setState({ theme: 'auto' });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <ThemeSelector />
-        </IntlProvider>
-      );
+      render(<ThemeSelector />, { wrapper });
 
       const autoButton = screen.getByText(messages.en['theme.auto']);
 
@@ -77,11 +68,7 @@ describe('ThemeSelector', () => {
 
       useThemeStore.setState({ theme: 'dark', setTheme: setThemeMock });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <ThemeSelector />
-        </IntlProvider>
-      );
+      render(<ThemeSelector />, { wrapper });
 
       const lightButton = screen.getByText(messages.en['theme.light']);
 
@@ -97,11 +84,7 @@ describe('ThemeSelector', () => {
 
       useThemeStore.setState({ theme: 'light', setTheme: setThemeMock });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <ThemeSelector />
-        </IntlProvider>
-      );
+      render(<ThemeSelector />, { wrapper });
 
       const darkButton = screen.getByText(messages.en['theme.dark']);
 
@@ -117,11 +100,7 @@ describe('ThemeSelector', () => {
 
       useThemeStore.setState({ theme: 'light', setTheme: setThemeMock });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <ThemeSelector />
-        </IntlProvider>
-      );
+      render(<ThemeSelector />, { wrapper });
 
       const autoButton = screen.getByText(messages.en['theme.auto']);
 

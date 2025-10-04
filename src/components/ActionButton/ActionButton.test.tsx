@@ -5,10 +5,11 @@ import ActionButton from './ActionButton';
 import { useAppStore } from '@/store/useAppStore';
 import { messages } from '@/i18n/config';
 import type { ScheduleConfig } from '@shared/types';
+import React from 'react';
 
-const renderComponent = () => render(
+const wrapper = ({ children }: { children: React.ReactNode }) => (
   <IntlProvider locale="en" messages={messages.en}>
-    <ActionButton />
+    {children}
   </IntlProvider>
 );
 
@@ -26,13 +27,13 @@ describe('ActionButton', () => {
 
   describe('when movement is stopped', () => {
     it('displays start button', () => {
-      renderComponent();
+      render(<ActionButton />, { wrapper });
 
       expect(screen.getByText(messages.en['action.start'])).toBeInTheDocument();
     });
 
     it('has aria-pressed as false', () => {
-      renderComponent();
+      render(<ActionButton />, { wrapper });
 
       const button = screen.getByRole('button');
 
@@ -44,7 +45,7 @@ describe('ActionButton', () => {
     it('displays stop button', () => {
       useAppStore.setState({ movementStatus: 'moving' });
 
-      renderComponent();
+      render(<ActionButton />, { wrapper });
 
       expect(screen.getByText(messages.en['action.stop'])).toBeInTheDocument();
     });
@@ -52,7 +53,7 @@ describe('ActionButton', () => {
     it('has aria-pressed as true', () => {
       useAppStore.setState({ movementStatus: 'moving' });
 
-      renderComponent();
+      render(<ActionButton />, { wrapper });
 
       const button = screen.getByRole('button');
 
@@ -64,7 +65,7 @@ describe('ActionButton', () => {
     it('disables the button', () => {
       useAppStore.setState({ scheduleEnabled: true, scheduleConfig: [] });
 
-      renderComponent();
+      render(<ActionButton />, { wrapper });
 
       const button = screen.getByRole('button');
 
@@ -83,7 +84,7 @@ describe('ActionButton', () => {
 
       useAppStore.setState({ interval: 60000, scheduleEnabled: false, scheduleConfig: [] });
 
-      renderComponent();
+      render(<ActionButton />, { wrapper });
 
       const button = screen.getByRole('button');
 
@@ -106,7 +107,7 @@ describe('ActionButton', () => {
 
       useAppStore.setState({ interval: 60000, scheduleEnabled: true, scheduleConfig });
 
-      renderComponent();
+      render(<ActionButton />, { wrapper });
 
       const button = screen.getByRole('button');
 
@@ -130,7 +131,7 @@ describe('ActionButton', () => {
 
       useAppStore.setState({ openModal: openModalMock, movementStatus: 'stopped' });
 
-      renderComponent();
+      render(<ActionButton />, { wrapper });
 
       const button = screen.getByRole('button');
 
@@ -143,13 +144,12 @@ describe('ActionButton', () => {
       const modalConfig = openModalMock.mock.calls[0][0];
 
       render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <div>
-            {modalConfig.title}
-            {modalConfig.body}
-            {modalConfig.footer}
-          </div>
-        </IntlProvider>
+        <div>
+          {modalConfig.title}
+          {modalConfig.body}
+          {modalConfig.footer}
+        </div>,
+        { wrapper }
       );
 
       expect(screen.getByText(messages.en['accessibility.title'])).toBeInTheDocument();

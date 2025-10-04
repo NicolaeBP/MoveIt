@@ -4,6 +4,13 @@ import { IntlProvider } from 'react-intl';
 import ScheduleStatus from './ScheduleStatus';
 import { useAppStore } from '@/store/useAppStore';
 import { messages } from '@/i18n/config';
+import React from 'react';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <IntlProvider locale="en" messages={messages.en}>
+    {children}
+  </IntlProvider>
+);
 
 describe('ScheduleStatus', () => {
   describe('when scheduleEnabled is false', () => {
@@ -14,11 +21,7 @@ describe('ScheduleStatus', () => {
         scheduleConfig: [],
       });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <ScheduleStatus />
-        </IntlProvider>
-      );
+      render(<ScheduleStatus />, { wrapper });
 
       expect(screen.queryByText(messages.en['schedule.status.running'])).not.toBeInTheDocument();
     });
@@ -33,11 +36,7 @@ describe('ScheduleStatus', () => {
           scheduleConfig: [{ dayIndex: 1, start: '09:00', end: '17:00' }],
         });
 
-        render(
-          <IntlProvider locale="en" messages={messages.en}>
-            <ScheduleStatus />
-          </IntlProvider>
-        );
+        render(<ScheduleStatus />, { wrapper });
 
         expect(screen.getByText(messages.en['schedule.status.running'])).toBeInTheDocument();
       });
@@ -51,11 +50,7 @@ describe('ScheduleStatus', () => {
           scheduleConfig: [{ dayIndex: 1, start: '09:00', end: '17:00' }],
         });
 
-        render(
-          <IntlProvider locale="en" messages={messages.en}>
-            <ScheduleStatus />
-          </IntlProvider>
-        );
+        render(<ScheduleStatus />, { wrapper });
 
         expect(screen.getByText(messages.en['schedule.status.outsideSchedule'])).toBeInTheDocument();
       });
@@ -69,11 +64,7 @@ describe('ScheduleStatus', () => {
           scheduleConfig: [],
         });
 
-        render(
-          <IntlProvider locale="en" messages={messages.en}>
-            <ScheduleStatus />
-          </IntlProvider>
-        );
+        render(<ScheduleStatus />, { wrapper });
 
         expect(screen.getByText(messages.en['schedule.status.noSchedule'])).toBeInTheDocument();
       });
@@ -87,11 +78,7 @@ describe('ScheduleStatus', () => {
           scheduleConfig: [{ dayIndex: 1, start: '09:00', end: '17:00' }],
         });
 
-        render(
-          <IntlProvider locale="en" messages={messages.en}>
-            <ScheduleStatus />
-          </IntlProvider>
-        );
+        render(<ScheduleStatus />, { wrapper });
 
         expect(screen.getByText(messages.en['schedule.status.stopped'])).toBeInTheDocument();
       });

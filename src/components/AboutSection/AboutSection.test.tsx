@@ -4,10 +4,11 @@ import { IntlProvider } from 'react-intl';
 import AboutSection from './AboutSection';
 import { APP_INFO } from '@/constants/appInfo';
 import { messages } from '@/i18n/config';
+import React from 'react';
 
-const renderComponent = () => render(
+const wrapper = ({ children }: { children: React.ReactNode }) => (
   <IntlProvider locale="en" messages={messages.en}>
-    <AboutSection />
+    {children}
   </IntlProvider>
 );
 
@@ -19,7 +20,7 @@ describe('AboutSection', () => {
 
   describe('when component renders', () => {
     it('displays app information', () => {
-      renderComponent();
+      render(<AboutSection />, { wrapper });
 
       expect(screen.getByText(messages.en['about.title'])).toBeInTheDocument();
       expect(screen.getByText(messages.en['about.version'], { exact: false })).toBeInTheDocument();
@@ -29,19 +30,19 @@ describe('AboutSection', () => {
     });
 
     it('displays default version when PACKAGE_VERSION is not set', () => {
-      renderComponent();
+      render(<AboutSection />, { wrapper });
 
       expect(screen.getByText(`v${APP_INFO.DEFAULT_VERSION}`)).toBeInTheDocument();
     });
 
     it('displays author name', () => {
-      renderComponent();
+      render(<AboutSection />, { wrapper });
 
       expect(screen.getByText(APP_INFO.AUTHOR)).toBeInTheDocument();
     });
 
     it('displays clickable email link', () => {
-      renderComponent();
+      render(<AboutSection />, { wrapper });
 
       const emailLink = screen.getByText(APP_INFO.EMAIL);
 
@@ -50,7 +51,7 @@ describe('AboutSection', () => {
     });
 
     it('displays clickable GitHub link', () => {
-      renderComponent();
+      render(<AboutSection />, { wrapper });
 
       const githubLink = screen.getByText(messages.en['about.viewOnGithub']);
 
@@ -61,7 +62,7 @@ describe('AboutSection', () => {
     });
 
     it('displays copyright notice', () => {
-      renderComponent();
+      render(<AboutSection />, { wrapper });
 
       expect(screen.getByText(messages.en['about.copyright'])).toBeInTheDocument();
     });
@@ -73,7 +74,7 @@ describe('AboutSection', () => {
 
       vi.stubEnv('VITE_BUILD_DATE', buildDate);
 
-      renderComponent();
+      render(<AboutSection />, { wrapper });
 
       expect(screen.getByText(/Build:/)).toBeInTheDocument();
     });
@@ -83,7 +84,7 @@ describe('AboutSection', () => {
     it('displays package version', () => {
       vi.stubEnv('PACKAGE_VERSION', '2.0.0');
 
-      renderComponent();
+      render(<AboutSection />, { wrapper });
 
       expect(screen.getByText('v2.0.0')).toBeInTheDocument();
     });

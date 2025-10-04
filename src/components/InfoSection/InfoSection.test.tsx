@@ -4,17 +4,20 @@ import { IntlProvider } from 'react-intl';
 import InfoSection from './InfoSection';
 import { useAppStore } from '@/store/useAppStore';
 import { messages } from '@/i18n/config';
+import React from 'react';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <IntlProvider locale="en" messages={messages.en}>
+    {children}
+  </IntlProvider>
+);
 
 describe('InfoSection', () => {
   describe('when component renders', () => {
     it('displays info description', () => {
       useAppStore.setState({ openModal: vi.fn() });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <InfoSection />
-        </IntlProvider>
-      );
+      render(<InfoSection />, { wrapper });
 
       expect(screen.getByText(messages.en['info.description'])).toBeInTheDocument();
     });
@@ -22,11 +25,7 @@ describe('InfoSection', () => {
     it('displays info button', () => {
       useAppStore.setState({ openModal: vi.fn() });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <InfoSection />
-        </IntlProvider>
-      );
+      render(<InfoSection />, { wrapper });
 
       const button = screen.getByLabelText(messages.en['info.button.aria']);
 
@@ -41,11 +40,7 @@ describe('InfoSection', () => {
 
       useAppStore.setState({ openModal: openModalMock });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <InfoSection />
-        </IntlProvider>
-      );
+      render(<InfoSection />, { wrapper });
 
       const button = screen.getByLabelText(messages.en['info.button.aria']);
 
@@ -56,12 +51,11 @@ describe('InfoSection', () => {
       const modalConfig = openModalMock.mock.calls[0][0];
 
       render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <div>
-            {modalConfig.title}
-            {modalConfig.body}
-          </div>
-        </IntlProvider>
+        <div>
+          {modalConfig.title}
+          {modalConfig.body}
+        </div>,
+        { wrapper }
       );
 
       expect(screen.getByText(messages.en['infoModal.title'])).toBeInTheDocument();

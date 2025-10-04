@@ -4,6 +4,7 @@ import { IntlProvider } from 'react-intl';
 import SettingsContent from './SettingsContent';
 import { useAppStore } from '@/store/useAppStore';
 import { messages } from '@/i18n/config';
+import React from 'react';
 
 const wrapper = ({ children }: { children: React.ReactNode }) => (
   <IntlProvider locale="en" messages={messages.en}>

@@ -3,6 +3,13 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import TimeRangeEditor from './TimeRangeEditor';
 import { messages } from '@/i18n/config';
+import React from 'react';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <IntlProvider locale="en" messages={messages.en}>
+    {children}
+  </IntlProvider>
+);
 
 describe('TimeRangeEditor', () => {
   describe('when component renders with one time range', () => {
@@ -10,16 +17,15 @@ describe('TimeRangeEditor', () => {
       const timeRanges = [{ start: '09:00', end: '17:00' }];
 
       render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeRangeEditor
-            timeRanges={timeRanges}
-            onUpdateTimeRange={vi.fn()}
-            onRemoveTimeRange={vi.fn()}
-            onAddTimeRange={vi.fn()}
-            canAddMore={true}
-            validationError={null}
-          />
-        </IntlProvider>
+        <TimeRangeEditor
+          timeRanges={timeRanges}
+          onUpdateTimeRange={vi.fn()}
+          onRemoveTimeRange={vi.fn()}
+          onAddTimeRange={vi.fn()}
+          canAddMore={true}
+          validationError={null}
+        />,
+        { wrapper }
       );
 
       const startInput = screen.getByLabelText(/Start time 1/) as HTMLInputElement;
@@ -33,16 +39,15 @@ describe('TimeRangeEditor', () => {
       const timeRanges = [{ start: '09:00', end: '17:00' }];
 
       render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeRangeEditor
-            timeRanges={timeRanges}
-            onUpdateTimeRange={vi.fn()}
-            onRemoveTimeRange={vi.fn()}
-            onAddTimeRange={vi.fn()}
-            canAddMore={true}
-            validationError={null}
-          />
-        </IntlProvider>
+        <TimeRangeEditor
+          timeRanges={timeRanges}
+          onUpdateTimeRange={vi.fn()}
+          onRemoveTimeRange={vi.fn()}
+          onAddTimeRange={vi.fn()}
+          canAddMore={true}
+          validationError={null}
+        />,
+        { wrapper }
       );
 
       expect(screen.getByText(messages.en['schedule.removeTimeRange'])).toBeInTheDocument();
@@ -57,16 +62,15 @@ describe('TimeRangeEditor', () => {
       ];
 
       render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeRangeEditor
-            timeRanges={timeRanges}
-            onUpdateTimeRange={vi.fn()}
-            onRemoveTimeRange={vi.fn()}
-            onAddTimeRange={vi.fn()}
-            canAddMore={true}
-            validationError={null}
-          />
-        </IntlProvider>
+        <TimeRangeEditor
+          timeRanges={timeRanges}
+          onUpdateTimeRange={vi.fn()}
+          onRemoveTimeRange={vi.fn()}
+          onAddTimeRange={vi.fn()}
+          canAddMore={true}
+          validationError={null}
+        />,
+        { wrapper }
       );
 
       expect(screen.getByLabelText(/Start time 1/)).toBeInTheDocument();
@@ -81,16 +85,15 @@ describe('TimeRangeEditor', () => {
       const timeRanges = [{ start: '09:00', end: '17:00' }];
 
       render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeRangeEditor
-            timeRanges={timeRanges}
-            onUpdateTimeRange={vi.fn()}
-            onRemoveTimeRange={vi.fn()}
-            onAddTimeRange={vi.fn()}
-            canAddMore={true}
-            validationError={null}
-          />
-        </IntlProvider>
+        <TimeRangeEditor
+          timeRanges={timeRanges}
+          onUpdateTimeRange={vi.fn()}
+          onRemoveTimeRange={vi.fn()}
+          onAddTimeRange={vi.fn()}
+          canAddMore={true}
+          validationError={null}
+        />,
+        { wrapper }
       );
 
       expect(screen.getByText(messages.en['schedule.addTimeRange'])).toBeInTheDocument();
@@ -102,16 +105,15 @@ describe('TimeRangeEditor', () => {
       const timeRanges = [{ start: '09:00', end: '17:00' }];
 
       render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeRangeEditor
-            timeRanges={timeRanges}
-            onUpdateTimeRange={vi.fn()}
-            onRemoveTimeRange={vi.fn()}
-            onAddTimeRange={vi.fn()}
-            canAddMore={false}
-            validationError={null}
-          />
-        </IntlProvider>
+        <TimeRangeEditor
+          timeRanges={timeRanges}
+          onUpdateTimeRange={vi.fn()}
+          onRemoveTimeRange={vi.fn()}
+          onAddTimeRange={vi.fn()}
+          canAddMore={false}
+          validationError={null}
+        />,
+        { wrapper }
       );
 
       expect(screen.queryByText(messages.en['schedule.addTimeRange'])).not.toBeInTheDocument();
@@ -124,16 +126,15 @@ describe('TimeRangeEditor', () => {
       const error = 'Invalid time range';
 
       render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeRangeEditor
-            timeRanges={timeRanges}
-            onUpdateTimeRange={vi.fn()}
-            onRemoveTimeRange={vi.fn()}
-            onAddTimeRange={vi.fn()}
-            canAddMore={true}
-            validationError={error}
-          />
-        </IntlProvider>
+        <TimeRangeEditor
+          timeRanges={timeRanges}
+          onUpdateTimeRange={vi.fn()}
+          onRemoveTimeRange={vi.fn()}
+          onAddTimeRange={vi.fn()}
+          canAddMore={true}
+          validationError={error}
+        />,
+        { wrapper }
       );
 
       expect(screen.getByText(error)).toBeInTheDocument();
@@ -146,16 +147,15 @@ describe('TimeRangeEditor', () => {
       const timeRanges = [{ start: '09:00', end: '17:00' }];
 
       render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeRangeEditor
-            timeRanges={timeRanges}
-            onUpdateTimeRange={onUpdateTimeRangeMock}
-            onRemoveTimeRange={vi.fn()}
-            onAddTimeRange={vi.fn()}
-            canAddMore={true}
-            validationError={null}
-          />
-        </IntlProvider>
+        <TimeRangeEditor
+          timeRanges={timeRanges}
+          onUpdateTimeRange={onUpdateTimeRangeMock}
+          onRemoveTimeRange={vi.fn()}
+          onAddTimeRange={vi.fn()}
+          canAddMore={true}
+          validationError={null}
+        />,
+        { wrapper }
       );
 
       const startInput = screen.getByLabelText(/Start time 1/);
@@ -172,16 +172,15 @@ describe('TimeRangeEditor', () => {
       const timeRanges = [{ start: '09:00', end: '17:00' }];
 
       render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeRangeEditor
-            timeRanges={timeRanges}
-            onUpdateTimeRange={onUpdateTimeRangeMock}
-            onRemoveTimeRange={vi.fn()}
-            onAddTimeRange={vi.fn()}
-            canAddMore={true}
-            validationError={null}
-          />
-        </IntlProvider>
+        <TimeRangeEditor
+          timeRanges={timeRanges}
+          onUpdateTimeRange={onUpdateTimeRangeMock}
+          onRemoveTimeRange={vi.fn()}
+          onAddTimeRange={vi.fn()}
+          canAddMore={true}
+          validationError={null}
+        />,
+        { wrapper }
       );
 
       const endInput = screen.getByLabelText(/End time 1/);
@@ -198,16 +197,15 @@ describe('TimeRangeEditor', () => {
       const timeRanges = [{ start: '09:00', end: '17:00' }];
 
       render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeRangeEditor
-            timeRanges={timeRanges}
-            onUpdateTimeRange={vi.fn()}
-            onRemoveTimeRange={onRemoveTimeRangeMock}
-            onAddTimeRange={vi.fn()}
-            canAddMore={true}
-            validationError={null}
-          />
-        </IntlProvider>
+        <TimeRangeEditor
+          timeRanges={timeRanges}
+          onUpdateTimeRange={vi.fn()}
+          onRemoveTimeRange={onRemoveTimeRangeMock}
+          onAddTimeRange={vi.fn()}
+          canAddMore={true}
+          validationError={null}
+        />,
+        { wrapper }
       );
 
       const removeButton = screen.getByText(messages.en['schedule.removeTimeRange']);
@@ -224,16 +222,15 @@ describe('TimeRangeEditor', () => {
       const timeRanges = [{ start: '09:00', end: '17:00' }];
 
       render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeRangeEditor
-            timeRanges={timeRanges}
-            onUpdateTimeRange={vi.fn()}
-            onRemoveTimeRange={vi.fn()}
-            onAddTimeRange={onAddTimeRangeMock}
-            canAddMore={true}
-            validationError={null}
-          />
-        </IntlProvider>
+        <TimeRangeEditor
+          timeRanges={timeRanges}
+          onUpdateTimeRange={vi.fn()}
+          onRemoveTimeRange={vi.fn()}
+          onAddTimeRange={onAddTimeRangeMock}
+          canAddMore={true}
+          validationError={null}
+        />,
+        { wrapper }
       );
 
       const addButton = screen.getByText(messages.en['schedule.addTimeRange']);

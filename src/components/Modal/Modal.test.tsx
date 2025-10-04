@@ -4,17 +4,20 @@ import { IntlProvider } from 'react-intl';
 import Modal from './Modal';
 import { useAppStore } from '@/store/useAppStore';
 import { messages } from '@/i18n/config';
+import React from 'react';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <IntlProvider locale="en" messages={messages.en}>
+    {children}
+  </IntlProvider>
+);
 
 describe('Modal', () => {
   describe('when modalContent is null', () => {
     it('renders nothing', () => {
       useAppStore.setState({ modalContent: null });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <Modal />
-        </IntlProvider>
-      );
+      render(<Modal />, { wrapper });
 
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
@@ -29,11 +32,7 @@ describe('Modal', () => {
         },
       });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <Modal />
-        </IntlProvider>
-      );
+      render(<Modal />, { wrapper });
 
       expect(screen.getByText('Test Title')).toBeInTheDocument();
       expect(screen.getByText('Test Body')).toBeInTheDocument();
@@ -48,11 +47,7 @@ describe('Modal', () => {
         },
       });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <Modal />
-        </IntlProvider>
-      );
+      render(<Modal />, { wrapper });
 
       expect(screen.getByText('Footer Button')).toBeInTheDocument();
     });
@@ -69,11 +64,7 @@ describe('Modal', () => {
         closeModal: closeModalMock,
       });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <Modal />
-        </IntlProvider>
-      );
+      render(<Modal />, { wrapper });
 
       const closeButton = screen.getByLabelText(messages.en['modal.close.aria']);
       closeButton.click();

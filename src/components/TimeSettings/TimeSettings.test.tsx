@@ -5,6 +5,13 @@ import TimeSettings from './TimeSettings';
 import { useAppStore } from '@/store/useAppStore';
 import { MS_PER_MINUTE, MS_PER_SECOND } from '@/constants/timeConstants';
 import { messages } from '@/i18n/config';
+import React from 'react';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <IntlProvider locale="en" messages={messages.en}>
+    {children}
+  </IntlProvider>
+);
 
 describe('TimeSettings', () => {
   beforeEach(() => {
@@ -17,32 +24,20 @@ describe('TimeSettings', () => {
 
   describe('when component renders', () => {
     it('displays label and input field', () => {
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeSettings />
-        </IntlProvider>
-      );
+      render(<TimeSettings />, { wrapper });
 
       expect(screen.getByText(messages.en['timeSettings.label'])).toBeInTheDocument();
       expect(screen.getByPlaceholderText(messages.en['timeSettings.placeholder'])).toBeInTheDocument();
     });
 
     it('displays examples text', () => {
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeSettings />
-        </IntlProvider>
-      );
+      render(<TimeSettings />, { wrapper });
 
       expect(screen.getByText(messages.en['timeSettings.examples'])).toBeInTheDocument();
     });
 
     it('displays current interval in minutes format', () => {
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeSettings />
-        </IntlProvider>
-      );
+      render(<TimeSettings />, { wrapper });
 
       const input = screen.getByPlaceholderText(messages.en['timeSettings.placeholder']) as HTMLInputElement;
 
@@ -54,11 +49,7 @@ describe('TimeSettings', () => {
     it('displays interval in seconds format', () => {
       useAppStore.setState({ interval: 30 * MS_PER_SECOND });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeSettings />
-        </IntlProvider>
-      );
+      render(<TimeSettings />, { wrapper });
 
       const input = screen.getByPlaceholderText(messages.en['timeSettings.placeholder']) as HTMLInputElement;
 
@@ -70,11 +61,7 @@ describe('TimeSettings', () => {
     it('disables the input field', () => {
       useAppStore.setState({ movementStatus: 'moving' });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeSettings />
-        </IntlProvider>
-      );
+      render(<TimeSettings />, { wrapper });
 
       const input = screen.getByPlaceholderText(messages.en['timeSettings.placeholder']);
 
@@ -87,11 +74,7 @@ describe('TimeSettings', () => {
       const setIntervalMock = vi.fn();
       useAppStore.setState({ setInterval: setIntervalMock });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeSettings />
-        </IntlProvider>
-      );
+      render(<TimeSettings />, { wrapper });
 
       const input = screen.getByPlaceholderText(messages.en['timeSettings.placeholder']);
 
@@ -106,11 +89,7 @@ describe('TimeSettings', () => {
       const setIntervalMock = vi.fn();
       useAppStore.setState({ setInterval: setIntervalMock });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeSettings />
-        </IntlProvider>
-      );
+      render(<TimeSettings />, { wrapper });
 
       const input = screen.getByPlaceholderText(messages.en['timeSettings.placeholder']);
 
@@ -125,11 +104,7 @@ describe('TimeSettings', () => {
       const setIntervalMock = vi.fn();
       useAppStore.setState({ setInterval: setIntervalMock });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeSettings />
-        </IntlProvider>
-      );
+      render(<TimeSettings />, { wrapper });
 
       const input = screen.getByPlaceholderText(messages.en['timeSettings.placeholder']);
 
@@ -143,11 +118,7 @@ describe('TimeSettings', () => {
     it('resets to previous valid interval', () => {
       useAppStore.setState({ interval: 5 * MS_PER_MINUTE });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeSettings />
-        </IntlProvider>
-      );
+      render(<TimeSettings />, { wrapper });
 
       const input = screen.getByPlaceholderText(messages.en['timeSettings.placeholder']) as HTMLInputElement;
 
@@ -162,11 +133,7 @@ describe('TimeSettings', () => {
     it('applies error styling', () => {
       useAppStore.setState({ interval: 0 });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeSettings />
-        </IntlProvider>
-      );
+      render(<TimeSettings />, { wrapper });
 
       const input = screen.getByPlaceholderText(messages.en['timeSettings.placeholder']);
 
@@ -178,11 +145,7 @@ describe('TimeSettings', () => {
     it('resets to current interval on change', () => {
       useAppStore.setState({ interval: 5 * MS_PER_MINUTE });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <TimeSettings />
-        </IntlProvider>
-      );
+      render(<TimeSettings />, { wrapper });
 
       const input = screen.getByPlaceholderText(messages.en['timeSettings.placeholder']) as HTMLInputElement;
 

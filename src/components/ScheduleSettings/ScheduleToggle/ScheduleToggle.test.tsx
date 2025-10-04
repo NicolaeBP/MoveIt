@@ -3,25 +3,24 @@ import { render, screen } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import ScheduleToggle from './ScheduleToggle';
 import { messages } from '@/i18n/config';
+import React from 'react';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <IntlProvider locale="en" messages={messages.en}>
+    {children}
+  </IntlProvider>
+);
 
 describe('ScheduleToggle', () => {
   describe('when component renders', () => {
     it('displays schedule label', () => {
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <ScheduleToggle enabled={false} isRunning={false} onToggle={vi.fn()} />
-        </IntlProvider>
-      );
+      render(<ScheduleToggle enabled={false} isRunning={false} onToggle={vi.fn()} />, { wrapper });
 
       expect(screen.getByText(messages.en['schedule.title'])).toBeInTheDocument();
     });
 
     it('displays toggle switch', () => {
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <ScheduleToggle enabled={false} isRunning={false} onToggle={vi.fn()} />
-        </IntlProvider>
-      );
+      render(<ScheduleToggle enabled={false} isRunning={false} onToggle={vi.fn()} />, { wrapper });
 
       const toggle = screen.getByRole('switch');
 
@@ -32,11 +31,7 @@ describe('ScheduleToggle', () => {
 
   describe('when enabled is true', () => {
     it('marks toggle as checked', () => {
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <ScheduleToggle enabled={true} isRunning={false} onToggle={vi.fn()} />
-        </IntlProvider>
-      );
+      render(<ScheduleToggle enabled={true} isRunning={false} onToggle={vi.fn()} />, { wrapper });
 
       const toggle = screen.getByRole('switch');
 
@@ -46,11 +41,7 @@ describe('ScheduleToggle', () => {
 
   describe('when enabled is false', () => {
     it('marks toggle as unchecked', () => {
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <ScheduleToggle enabled={false} isRunning={false} onToggle={vi.fn()} />
-        </IntlProvider>
-      );
+      render(<ScheduleToggle enabled={false} isRunning={false} onToggle={vi.fn()} />, { wrapper });
 
       const toggle = screen.getByRole('switch');
 
@@ -60,11 +51,7 @@ describe('ScheduleToggle', () => {
 
   describe('when isRunning is true', () => {
     it('disables the toggle', () => {
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <ScheduleToggle enabled={false} isRunning={true} onToggle={vi.fn()} />
-        </IntlProvider>
-      );
+      render(<ScheduleToggle enabled={false} isRunning={true} onToggle={vi.fn()} />, { wrapper });
 
       const toggle = screen.getByRole('switch');
 
@@ -76,11 +63,7 @@ describe('ScheduleToggle', () => {
     it('calls onToggle callback', () => {
       const onToggleMock = vi.fn();
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <ScheduleToggle enabled={false} isRunning={false} onToggle={onToggleMock} />
-        </IntlProvider>
-      );
+      render(<ScheduleToggle enabled={false} isRunning={false} onToggle={onToggleMock} />, { wrapper });
 
       const toggle = screen.getByRole('switch');
 
@@ -94,11 +77,7 @@ describe('ScheduleToggle', () => {
     it('does not call onToggle callback', () => {
       const onToggleMock = vi.fn();
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <ScheduleToggle enabled={false} isRunning={true} onToggle={onToggleMock} />
-        </IntlProvider>
-      );
+      render(<ScheduleToggle enabled={false} isRunning={true} onToggle={onToggleMock} />, { wrapper });
 
       const toggle = screen.getByRole('switch');
 

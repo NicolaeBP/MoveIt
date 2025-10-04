@@ -5,6 +5,7 @@ import ScheduleSettings from './ScheduleSettings';
 import { useAppStore } from '@/store/useAppStore';
 import { messages } from '@/i18n/config';
 import * as timeUtils from '@/utils/timeUtils';
+import React from 'react';
 
 vi.mock('@/utils/timeUtils', async () => {
   const actual = await vi.importActual('@/utils/timeUtils');

@@ -3,15 +3,18 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import DayScheduleList from './DayScheduleList';
 import { messages } from '@/i18n/config';
+import React from 'react';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <IntlProvider locale="en" messages={messages.en}>
+    {children}
+  </IntlProvider>
+);
 
 describe('DayScheduleList', () => {
   describe('when schedule is not active', () => {
     it('displays unchecked checkbox', () => {
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <DayScheduleList day="monday" schedule={[]} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} />
-        </IntlProvider>
-      );
+      render(<DayScheduleList day="monday" schedule={[]} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} />, { wrapper });
 
       const checkbox = screen.getByRole('checkbox');
 
@@ -19,11 +22,7 @@ describe('DayScheduleList', () => {
     });
 
     it('does not display edit button', () => {
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <DayScheduleList day="monday" schedule={[]} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} />
-        </IntlProvider>
-      );
+      render(<DayScheduleList day="monday" schedule={[]} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} />, { wrapper });
 
       expect(screen.queryByText(messages.en['schedule.edit'])).not.toBeInTheDocument();
     });
@@ -33,11 +32,7 @@ describe('DayScheduleList', () => {
     const schedule = [{ dayIndex: 1, start: '09:00', end: '17:00' }];
 
     it('displays checked checkbox', () => {
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <DayScheduleList day="monday" schedule={schedule} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} />
-        </IntlProvider>
-      );
+      render(<DayScheduleList day="monday" schedule={schedule} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} />, { wrapper });
 
       const checkbox = screen.getByRole('checkbox');
 
@@ -45,21 +40,13 @@ describe('DayScheduleList', () => {
     });
 
     it('displays schedule time ranges', () => {
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <DayScheduleList day="monday" schedule={schedule} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} />
-        </IntlProvider>
-      );
+      render(<DayScheduleList day="monday" schedule={schedule} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} />, { wrapper });
 
       expect(screen.getByText(/09:00 - 17:00/)).toBeInTheDocument();
     });
 
     it('displays edit button', () => {
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <DayScheduleList day="monday" schedule={schedule} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} />
-        </IntlProvider>
-      );
+      render(<DayScheduleList day="monday" schedule={schedule} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} />, { wrapper });
 
       expect(screen.getByText(messages.en['schedule.edit'])).toBeInTheDocument();
     });
@@ -67,11 +54,7 @@ describe('DayScheduleList', () => {
 
   describe('when is current day', () => {
     it('displays today indicator', () => {
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <DayScheduleList day="monday" schedule={[]} isCurrentDay={true} onToggle={vi.fn()} onEdit={vi.fn()} />
-        </IntlProvider>
-      );
+      render(<DayScheduleList day="monday" schedule={[]} isCurrentDay={true} onToggle={vi.fn()} onEdit={vi.fn()} />, { wrapper });
 
       expect(screen.getByText(/today/i)).toBeInTheDocument();
     });
@@ -84,11 +67,7 @@ describe('DayScheduleList', () => {
         { dayIndex: 1, start: '13:00', end: '17:00' },
       ];
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <DayScheduleList day="monday" schedule={schedule} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} />
-        </IntlProvider>
-      );
+      render(<DayScheduleList day="monday" schedule={schedule} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} />, { wrapper });
 
       expect(screen.getByText(/09:00 - 12:00/)).toBeInTheDocument();
       expect(screen.getByText(/13:00 - 17:00/)).toBeInTheDocument();
@@ -99,11 +78,7 @@ describe('DayScheduleList', () => {
     it('calls onToggle with correct day', () => {
       const onToggleMock = vi.fn();
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <DayScheduleList day="monday" schedule={[]} isCurrentDay={false} onToggle={onToggleMock} onEdit={vi.fn()} />
-        </IntlProvider>
-      );
+      render(<DayScheduleList day="monday" schedule={[]} isCurrentDay={false} onToggle={onToggleMock} onEdit={vi.fn()} />, { wrapper });
 
       const checkbox = screen.getByRole('checkbox');
 
@@ -118,11 +93,7 @@ describe('DayScheduleList', () => {
       const onEditMock = vi.fn();
       const schedule = [{ dayIndex: 1, start: '09:00', end: '17:00' }];
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <DayScheduleList day="monday" schedule={schedule} isCurrentDay={false} onToggle={vi.fn()} onEdit={onEditMock} />
-        </IntlProvider>
-      );
+      render(<DayScheduleList day="monday" schedule={schedule} isCurrentDay={false} onToggle={vi.fn()} onEdit={onEditMock} />, { wrapper });
 
       const editButton = screen.getByText(messages.en['schedule.edit']);
 
@@ -134,11 +105,7 @@ describe('DayScheduleList', () => {
 
   describe('when disabled prop is true', () => {
     it('disables the checkbox', () => {
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <DayScheduleList day="monday" schedule={[]} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} disabled={true} />
-        </IntlProvider>
-      );
+      render(<DayScheduleList day="monday" schedule={[]} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} disabled={true} />, { wrapper });
 
       const checkbox = screen.getByRole('checkbox');
 
@@ -148,11 +115,7 @@ describe('DayScheduleList', () => {
     it('hides edit button even when schedule is active', () => {
       const schedule = [{ dayIndex: 1, start: '09:00', end: '17:00' }];
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <DayScheduleList day="monday" schedule={schedule} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} disabled={true} />
-        </IntlProvider>
-      );
+      render(<DayScheduleList day="monday" schedule={schedule} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} disabled={true} />, { wrapper });
 
       expect(screen.queryByText(messages.en['schedule.edit'])).not.toBeInTheDocument();
     });

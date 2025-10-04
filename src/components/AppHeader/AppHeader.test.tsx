@@ -4,17 +4,20 @@ import { IntlProvider } from 'react-intl';
 import AppHeader from './AppHeader';
 import { useAppStore } from '@/store/useAppStore';
 import { messages } from '@/i18n/config';
+import React from 'react';
+
+const wrapper = ({ children }: { children: React.ReactNode }) => (
+  <IntlProvider locale="en" messages={messages.en}>
+    {children}
+  </IntlProvider>
+);
 
 describe('AppHeader', () => {
   describe('when component renders', () => {
     it('displays app title', () => {
       useAppStore.setState({ openModal: vi.fn(), closeModal: vi.fn() });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <AppHeader />
-        </IntlProvider>
-      );
+      render(<AppHeader />, { wrapper });
 
       expect(screen.getByText(messages.en['app.title'])).toBeInTheDocument();
     });
@@ -22,11 +25,7 @@ describe('AppHeader', () => {
     it('displays settings button', () => {
       useAppStore.setState({ openModal: vi.fn(), closeModal: vi.fn() });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <AppHeader />
-        </IntlProvider>
-      );
+      render(<AppHeader />, { wrapper });
 
       const button = screen.getByLabelText(messages.en['app.openSettings']);
 
@@ -42,11 +41,7 @@ describe('AppHeader', () => {
 
       useAppStore.setState({ openModal: openModalMock, closeModal: closeModalMock });
 
-      render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <AppHeader />
-        </IntlProvider>
-      );
+      render(<AppHeader />, { wrapper });
 
       const button = screen.getByLabelText(messages.en['app.openSettings']);
 
@@ -57,13 +52,12 @@ describe('AppHeader', () => {
       const modalConfig = openModalMock.mock.calls[0][0];
 
       render(
-        <IntlProvider locale="en" messages={messages.en}>
-          <div>
-            {modalConfig.title}
-            {modalConfig.body}
-            {modalConfig.footer}
-          </div>
-        </IntlProvider>
+        <div>
+          {modalConfig.title}
+          {modalConfig.body}
+          {modalConfig.footer}
+        </div>,
+        { wrapper }
       );
 
       expect(screen.getByText(messages.en['settings.title'])).toBeInTheDocument();
