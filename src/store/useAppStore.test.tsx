@@ -168,10 +168,7 @@ describe('useAppStore', () => {
       it('restores interval from localStorage', () => {
         const persistedInterval = 3000;
 
-        localStorage.setItem(
-          'moveit-storage',
-          JSON.stringify({ state: { interval: persistedInterval } })
-        );
+        localStorage.setItem('moveit-storage', JSON.stringify({ state: { interval: persistedInterval } }));
 
         useAppStore.persist.rehydrate();
 
@@ -181,10 +178,7 @@ describe('useAppStore', () => {
       it('restores schedule config from localStorage', () => {
         const scheduleConfig = [{ dayIndex: 1, start: '09:00', end: '17:00' }];
 
-        localStorage.setItem(
-          'moveit-storage',
-          JSON.stringify({ state: { scheduleConfig } })
-        );
+        localStorage.setItem('moveit-storage', JSON.stringify({ state: { scheduleConfig } }));
 
         useAppStore.persist.rehydrate();
 
@@ -194,10 +188,7 @@ describe('useAppStore', () => {
 
     describe('when invalid interval in persisted state', () => {
       it('resets to default when interval is negative', () => {
-        localStorage.setItem(
-          'moveit-storage',
-          JSON.stringify({ state: { interval: -1000 } })
-        );
+        localStorage.setItem('moveit-storage', JSON.stringify({ state: { interval: -1000 } }));
 
         useAppStore.persist.rehydrate();
 
@@ -205,10 +196,7 @@ describe('useAppStore', () => {
       });
 
       it('resets to default when interval is NaN', () => {
-        localStorage.setItem(
-          'moveit-storage',
-          JSON.stringify({ state: { interval: NaN } })
-        );
+        localStorage.setItem('moveit-storage', JSON.stringify({ state: { interval: NaN } }));
 
         useAppStore.persist.rehydrate();
 
@@ -218,10 +206,7 @@ describe('useAppStore', () => {
       it('resets to default when interval exceeds max', () => {
         const maxInterval = 24 * 60 * MS_PER_MINUTE;
 
-        localStorage.setItem(
-          'moveit-storage',
-          JSON.stringify({ state: { interval: maxInterval + 1000 } })
-        );
+        localStorage.setItem('moveit-storage', JSON.stringify({ state: { interval: maxInterval + 1000 } }));
 
         useAppStore.persist.rehydrate();
 
@@ -231,10 +216,7 @@ describe('useAppStore', () => {
 
     describe('when invalid scheduleConfig in persisted state', () => {
       it('resets to empty array when not an array', () => {
-        localStorage.setItem(
-          'moveit-storage',
-          JSON.stringify({ state: { scheduleConfig: 'invalid' } })
-        );
+        localStorage.setItem('moveit-storage', JSON.stringify({ state: { scheduleConfig: 'invalid' } }));
 
         useAppStore.persist.rehydrate();
 

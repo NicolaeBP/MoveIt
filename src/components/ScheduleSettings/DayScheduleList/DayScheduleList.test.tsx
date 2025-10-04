@@ -105,7 +105,9 @@ describe('DayScheduleList', () => {
 
   describe('when disabled prop is true', () => {
     it('disables the checkbox', () => {
-      render(<DayScheduleList day="monday" schedule={[]} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} disabled={true} />, { wrapper });
+      render(<DayScheduleList day="monday" schedule={[]} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} disabled={true} />, {
+        wrapper,
+      });
 
       const checkbox = screen.getByRole('checkbox');
 
@@ -115,7 +117,10 @@ describe('DayScheduleList', () => {
     it('hides edit button even when schedule is active', () => {
       const schedule = [{ dayIndex: 1, start: '09:00', end: '17:00' }];
 
-      render(<DayScheduleList day="monday" schedule={schedule} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} disabled={true} />, { wrapper });
+      render(
+        <DayScheduleList day="monday" schedule={schedule} isCurrentDay={false} onToggle={vi.fn()} onEdit={vi.fn()} disabled={true} />,
+        { wrapper }
+      );
 
       expect(screen.queryByText(messages.en['schedule.edit'])).not.toBeInTheDocument();
     });
