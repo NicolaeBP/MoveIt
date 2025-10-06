@@ -19,6 +19,7 @@
     "clean": "rm -rf dist/ release/ node_modules/.cache node_modules/.vite",
     "build:mac": "npm run clean && npm run build:vite && npm run build:electron && npm run package:mac",
     "build:mac:nosign": "npm run clean && npm run build:vite && npm run build:electron && CSC_IDENTITY_AUTO_DISCOVERY=false npm run package:mac",
+    "build:mas": "npm run clean && npm run build:vite && npm run build:electron && npm run package:mas",
     "build:win": "npm run clean && npm run build:vite && npm run build:electron && npm run package:win",
     "build:all": "npm run clean && npm run build:vite && npm run build:electron && npm run package:win && npm run package:mac",
     "build:vite": "vite build",
@@ -26,6 +27,7 @@
     "package": "cross-env NODE_NO_WARNINGS=1 electron-builder",
     "package:win": "cross-env NODE_NO_WARNINGS=1 electron-builder --win",
     "package:mac": "cross-env NODE_NO_WARNINGS=1 electron-builder --mac",
+    "package:mas": "cross-env NODE_NO_WARNINGS=1 electron-builder --mas",
     "package:linux": "cross-env NODE_NO_WARNINGS=1 electron-builder --linux",
     "preview": "vite preview",
     "lint": "eslint src scripts electron --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -119,6 +121,18 @@
       "entitlements": "entitlements.mac.plist",
       "entitlementsInherit": "entitlements.mac.plist",
       "identity": "Nicolae Balica (72Z547BVVA)"
+    },
+    "mas": {
+      "type": "distribution",
+      "category": "public.app-category.utilities",
+      "icon": "assets/icon.icns",
+      "entitlements": "entitlements.mas.plist",
+      "entitlementsInherit": "entitlements.mas.inherit.plist",
+      "provisioningProfile": "build/MoveIt_Mac_App_Store.provisionprofile",
+      "hardenedRuntime": false,
+      "gatekeeperAssess": false,
+      "binaries": [],
+      "identity": "3rd Party Mac Developer Application: Nicolae Balica (72Z547BVVA)"
     },
     "win": {
       "target": [

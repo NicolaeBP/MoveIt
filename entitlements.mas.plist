@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- REQUIRED: Enable App Sandbox for Mac App Store -->
+    <key>com.apple.security.app-sandbox</key>
+    <true/>
+
+    <!-- Allow network access (for potential updates or analytics) -->
+    <key>com.apple.security.network.client</key>
+    <true/>
+
+    <!-- Allow user-selected file access -->
+    <key>com.apple.security.files.user-selected.read-write</key>
+    <true/>
+
+    <!-- Allow bookmark-based file access -->
+    <key>com.apple.security.files.bookmarks.app-scope</key>
+    <true/>
+
+    <!-- Apple Events for automation/accessibility -->
+    <key>com.apple.security.automation.apple-events</key>
+    <true/>
+
+    <!-- JIT compilation for Electron -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+
+    <!-- Unsigned executable memory for Electron -->
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <true/>
+
+    <!-- Disable library validation for Electron -->
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+</dict>
+</plist>
