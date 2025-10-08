@@ -1,4 +1,16 @@
-import { app, BrowserWindow, ipcMain, systemPreferences, shell, Tray, Menu, nativeImage, nativeTheme, Notification } from 'electron';
+import {
+  app,
+  BrowserWindow,
+  ipcMain,
+  systemPreferences,
+  shell,
+  Tray,
+  Menu,
+  nativeImage,
+  nativeTheme,
+  Notification,
+  powerMonitor,
+} from 'electron';
 
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -109,6 +121,10 @@ app.whenReady().then(() => {
   createSystemTray();
 
   app.on(ELECTRON_EVENTS.ACTIVATE, () => !BrowserWindow.getAllWindows().length && createMainApplicationWindow());
+});
+
+powerMonitor.on('resume', () => {
+  if (isMovementCycleRunning()) runMovementCycle();
 });
 
 const createMainApplicationWindow = () => {

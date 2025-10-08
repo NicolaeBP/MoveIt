@@ -1,6 +1,6 @@
 {
   "name": "moveit",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A modern Electron + React app that moves your mouse to prevent system sleep",
   "author": "Nicolae Balica",
   "license": "MIT",
@@ -27,7 +27,7 @@
     "package": "cross-env NODE_NO_WARNINGS=1 electron-builder",
     "package:win": "cross-env NODE_NO_WARNINGS=1 electron-builder --win",
     "package:mac": "cross-env NODE_NO_WARNINGS=1 electron-builder --mac",
-    "package:mas": "cross-env NODE_NO_WARNINGS=1 electron-builder --mas",
+    "package:mas": "cross-env NODE_NO_WARNINGS=1 electron-builder --mac mas",
     "package:linux": "cross-env NODE_NO_WARNINGS=1 electron-builder --linux",
     "preview": "vite preview",
     "lint": "eslint src scripts electron --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -132,7 +132,7 @@
       "hardenedRuntime": false,
       "gatekeeperAssess": false,
       "binaries": [],
-      "identity": "3rd Party Mac Developer Application: Nicolae Balica (72Z547BVVA)"
+      "identity": "Nicolae Balica (72Z547BVVA)"
     },
     "win": {
       "target": [
