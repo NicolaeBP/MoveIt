@@ -199,6 +199,36 @@ The build process uses electron-builder with platform-specific configurations:
 - Code signing (when certificates are configured)
 - Supports both x64 and ia32 architectures
 
+#### Windows Code Signing Setup
+
+For signed Windows builds, you'll need to set up the SSL.com CodeSignTool:
+
+1. **Download CodeSignTool** from [SSL.com](https://www.ssl.com/guide/esigner-codesigntool-command-guide/)
+2. **Extract** to `tools/CodeSignTool/` in the project root
+3. **Configure credentials** in `.env.local`:
+   ```bash
+   WINDOWS_SIGN_USER_NAME=your_username
+   WINDOWS_SIGN_USER_PASSWORD=your_password
+   WINDOWS_SIGN_CREDENTIAL_ID=your_credential_id
+   WINDOWS_SIGN_USER_TOTP=your_totp_secret
+   ```
+
+**Project structure after setup:**
+```
+MoveIt/
+├── tools/
+│   └── CodeSignTool/
+│       ├── CodeSignTool.sh
+│       ├── CodeSignTool.bat
+│       └── jar/
+│           └── code_sign_tool-1.3.2.jar
+```
+
+**Unsigned builds (for testing):**
+```bash
+npm run build:win:nosign   # Skips code signing
+```
+
 ### 🧪 Testing
 
 ```bash

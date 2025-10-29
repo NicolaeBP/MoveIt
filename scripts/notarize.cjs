@@ -10,6 +10,11 @@ exports.default = async function notarizing(context) {
     return;
   }
 
+  if (process.env.SKIP_SIGNING === 'true') {
+    console.log('⚠️  macOS notarization skipped - SKIP_SIGNING=true');
+    return;
+  }
+
   const appName = context.packager.appInfo.productFilename;
   const appPath = path.join(appOutDir, `${appName}.app`);
 

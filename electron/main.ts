@@ -78,10 +78,7 @@ ipcMain.handle(IPC_CHANNELS.WINDOW_HIDE_TO_TRAY, (_, showNotification?: boolean)
 const showTrayNotification = () => {
   if (!Notification.isSupported()) return;
 
-  const notification = new Notification({
-    title: SMART_MOUSE_MOVER,
-    body: 'App minimized to system tray',
-  });
+  const notification = new Notification({ body: 'App minimized to system tray' });
 
   notification.show();
 
@@ -105,6 +102,8 @@ nativeTheme.on(ELECTRON_EVENTS.UPDATED, () => {
     mainApplicationWindow.webContents.send(IPC_CHANNELS.THEME_UPDATED, nativeTheme.shouldUseDarkColors);
   }
 });
+
+if (process.platform === 'win32') app.setAppUserModelId('MoveIt');
 
 // === APP LIFECYCLE ===
 app.whenReady().then(() => {

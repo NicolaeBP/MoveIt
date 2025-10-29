@@ -113,6 +113,9 @@ stats.html
 *_certificatesigningrequest.certSigningRequest
 /build-*
 
+# Windows code signing tool (33MB, download from SSL.com)
+/tools/CodeSignTool/
+
 # Additional IDE & Editor Files
 *.sublime-*
 .history/
