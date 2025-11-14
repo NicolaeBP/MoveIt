@@ -162,6 +162,17 @@
     "linux": {
       "target": "AppImage",
       "icon": "assets/icon.png"
+    },
+    "appx": {
+      "applicationId": "MoveIt",
+      "backgroundColor": "#ffffff",
+      "displayName": "MoveIt",
+      "identityName": "NicolaeBalica.MoveIt",
+      "publisher": "CN=PUBLISHER_ID_PLACEHOLDER",
+      "publisherDisplayName": "Nicolae Balica",
+      "languages": [
+        "en-US"
+      ]
     }
   },
   "lint-staged": {

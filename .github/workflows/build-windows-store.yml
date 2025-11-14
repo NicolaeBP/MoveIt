@@ -1,0 +1,59 @@
+name: Build Windows Store Package
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to build (e.g., 1.0.4)'
+        required: true
+        type: string
+
+jobs:
+  build-appx:
+    name: Build AppX for Microsoft Store
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Vite (React)
+        run: npm run build:vite
+
+      - name: Build Electron (Main Process)
+        run: npm run build:electron
+
+      - name: Build AppX Package
+        run: npx cross-env NODE_NO_WARNINGS=1 electron-builder --win appx
+        env:
+          SKIP_SIGNING: true
+
+      - name: Upload AppX Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-store-package-${{ inputs.version }}
+          path: |
+            release/*.appx
+            release/*.appxupload
+          retention-days: 30
+
+      - name: Build Summary
+        run: |
+          echo "## Windows Store Build Complete ✅" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** ${{ inputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Next Steps:" >> $GITHUB_STEP_SUMMARY
+          echo "1. Download the artifact from this workflow run" >> $GITHUB_STEP_SUMMARY
+          echo "2. Update \`publisher\` in package.json with your actual Publisher ID" >> $GITHUB_STEP_SUMMARY
+          echo "3. Upload .appx file to Microsoft Partner Center" >> $GITHUB_STEP_SUMMARY
+          echo "4. Complete store listing and submit for review" >> $GITHUB_STEP_SUMMARY
