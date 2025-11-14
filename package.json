@@ -1,6 +1,6 @@
 {
   "name": "moveit",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A modern Electron + React app that moves your mouse to prevent system sleep",
   "author": "Nicolae Balica",
   "license": "MIT",
@@ -52,6 +52,7 @@
   "dependencies": {
     "@nut-tree-fork/nut-js": "^4.2.6",
     "electron-store": "^10.1.0",
+    "electron-updater": "^6.6.2",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-intl": "^7.1.11",
@@ -95,7 +96,7 @@
     "terser": "^5.44.0",
     "tsx": "^4.20.5",
     "typescript": "^5.9.2",
-    "vite": "^7.1.5",
+    "vite": "7.1.11",
     "vitest": "^3.2.4",
     "wait-on": "^9.0.0"
   },
@@ -104,6 +105,13 @@
     "productName": "MoveIt",
     "executableName": "MoveIt",
     "afterSign": "scripts/notarize.cjs",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "NicolaeBP",
+        "repo": "MoveIt"
+      }
+    ],
     "directories": {
       "output": "release",
       "buildResources": "build"
