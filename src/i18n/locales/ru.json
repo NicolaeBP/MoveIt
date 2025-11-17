@@ -99,5 +99,17 @@
   "window.maximize": "Maximize window",
   "window.hideToTray": "Hide to tray",
   "windowControls.trayNotification": "Приложение свернуто в системный трей",
-  "settings.showTrayMessage": "Показывать уведомление при сворачивании в трей"
+  "settings.showTrayMessage": "Показывать уведомление при сворачивании в трей",
+  "settings.autoUpdates": "Включить автоматические обновления",
+  "settings.checkForUpdates": "Проверить обновления",
+  "settings.updateAvailable": "Доступно Новое Обновление",
+  "updates.title": "Доступно обновление",
+  "updates.newVersionAvailable": "Доступна версия {version}",
+  "updates.downloading": "Загрузка обновления...",
+  "updates.restartNow": "Перезапустить сейчас",
+  "updates.checking": "Проверка обновлений...",
+  "updates.upToDate": "Вы уже используете последнюю версию",
+  "updates.checkError": "Не удалось проверить обновления",
+  "updates.readyToInstall": "Обновления готовы к установке, перезапустите приложение для обновления",
+  "common.close": "Закрыть"
 }

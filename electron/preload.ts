@@ -34,6 +34,26 @@ const electronAPI = {
       return () => ipcRenderer.removeListener(IPC_CHANNELS.THEME_UPDATED, listener);
     },
   },
+  updates: {
+    checkForUpdates: (): Promise<{ version?: string } | undefined> =>
+      ipcRenderer.invoke(IPC_CHANNELS.UPDATE_CHECK_FOR_UPDATES),
+    restartAndInstall: (): Promise<void> => ipcRenderer.invoke(IPC_CHANNELS.UPDATE_RESTART_AND_INSTALL),
+    notifyAutoUpdatesChanged: (enabled: boolean): void => ipcRenderer.send(IPC_CHANNELS.UPDATE_AUTO_ENABLED_CHANGED, enabled),
+    onUpdateDownloaded: (callback: (info: { version: string }) => void) => {
+      const listener = (_: Electron.IpcRendererEvent, info: { version: string }) => callback(info);
+
+      ipcRenderer.on(IPC_CHANNELS.UPDATE_DOWNLOADED, listener);
+
+      return () => ipcRenderer.removeListener(IPC_CHANNELS.UPDATE_DOWNLOADED, listener);
+    },
+    onSetIsUpToDate: (callback: (isUpToDate: boolean) => void) => {
+      const listener = (_: Electron.IpcRendererEvent, isUpToDate: boolean) => callback(isUpToDate);
+
+      ipcRenderer.on(IPC_CHANNELS.SET_IS_UP_TO_DATE, listener);
+
+      return () => ipcRenderer.removeListener(IPC_CHANNELS.SET_IS_UP_TO_DATE, listener);
+    },
+  },
 };
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI);

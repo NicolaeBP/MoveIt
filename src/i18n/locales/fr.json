@@ -99,5 +99,17 @@
   "window.maximize": "Maximize window",
   "window.hideToTray": "Hide to tray",
   "windowControls.trayNotification": "Application minimisée dans la barre d'état système",
-  "settings.showTrayMessage": "Afficher une notification lors de la minimisation dans la barre d'état"
+  "settings.showTrayMessage": "Afficher une notification lors de la minimisation dans la barre d'état",
+  "settings.autoUpdates": "Activer les mises à jour automatiques",
+  "settings.checkForUpdates": "Rechercher des mises à jour",
+  "settings.updateAvailable": "Nouvelle Mise à Jour Disponible",
+  "updates.title": "Mise à jour disponible",
+  "updates.newVersionAvailable": "Version {version} est disponible",
+  "updates.downloading": "Téléchargement de la mise à jour...",
+  "updates.restartNow": "Redémarrer maintenant",
+  "updates.checking": "Recherche de mises à jour...",
+  "updates.upToDate": "Vous utilisez déjà la dernière version",
+  "updates.checkError": "Échec de la vérification des mises à jour",
+  "updates.readyToInstall": "Les mises à jour sont prêtes à installer, redémarrez l'application pour mettre à niveau",
+  "common.close": "Fermer"
 }

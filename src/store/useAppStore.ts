@@ -16,6 +16,8 @@ export interface AppStore {
   scheduleEnabled: boolean;
   showTrayMessage: boolean;
   movementStatus: MovementStatus;
+  autoUpdatesEnabled: boolean;
+  isUpToDate: boolean | null;
   setInterval: (interval: number) => void;
   openModal: (content: ModalContent) => void;
   closeModal: () => void;
@@ -23,6 +25,8 @@ export interface AppStore {
   setScheduleEnabled: (enabled: boolean) => void;
   setShowTrayMessage: (show: boolean) => void;
   setMovementStatus: (status: 'moving' | 'waiting' | 'stopped') => void;
+  setAutoUpdatesEnabled: (enabled: boolean) => void;
+  setIsUpToDate: (isUpToDate: boolean | null) => void;
 }
 
 export const useAppStore = create<AppStore>()(
@@ -34,6 +38,8 @@ export const useAppStore = create<AppStore>()(
       scheduleEnabled: false,
       showTrayMessage: true,
       movementStatus: 'stopped' as 'moving' | 'waiting' | 'stopped',
+      autoUpdatesEnabled: true,
+      isUpToDate: null,
 
       setInterval: (interval) => set({ interval }),
       openModal: (content) => set({ modalContent: content }),
@@ -45,6 +51,8 @@ export const useAppStore = create<AppStore>()(
       setScheduleEnabled: (enabled) => set({ scheduleEnabled: enabled }),
       setShowTrayMessage: (show) => set({ showTrayMessage: show }),
       setMovementStatus: (status) => set({ movementStatus: status }),
+      setAutoUpdatesEnabled: (enabled) => set({ autoUpdatesEnabled: enabled }),
+      setIsUpToDate: (isUpToDate) => set({ isUpToDate }),
     }),
     {
       name: 'moveit-storage',
@@ -53,11 +61,17 @@ export const useAppStore = create<AppStore>()(
         scheduleConfig: state.scheduleConfig,
         scheduleEnabled: state.scheduleEnabled,
         showTrayMessage: state.showTrayMessage,
+        autoUpdatesEnabled: state.autoUpdatesEnabled,
       }),
       merge: (persistedState, currentState) => {
         const merged = { ...currentState, ...(persistedState as Partial<AppStore>) };
 
-        if (typeof merged.interval !== 'number' || isNaN(merged.interval) || merged.interval <= 0 || merged.interval > MAX_INTERVAL_MS) {
+        if (
+          typeof merged.interval !== 'number' ||
+          Number.isNaN(merged.interval) ||
+          merged.interval <= 0 ||
+          merged.interval > MAX_INTERVAL_MS
+        ) {
           merged.interval = DEFAULT_INTERVAL_MS;
         }
 

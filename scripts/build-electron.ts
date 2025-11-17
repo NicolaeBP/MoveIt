@@ -15,7 +15,7 @@ const MAIN_BUILD_CONFIG = {
   target: 'node18',
   format: 'esm' as const,
   outdir: join(__dirname, '../dist'),
-  external: ['electron', '@nut-tree-fork/nut-js', 'electron-store'],
+  external: ['electron', '@nut-tree-fork/nut-js', 'electron-store', 'electron-updater', 'electron-log'],
   minify: process.env.NODE_ENV === 'production',
   sourcemap: process.env.NODE_ENV === 'development',
 };

@@ -17,6 +17,10 @@ import { fileURLToPath } from 'url';
 import { existsSync } from 'fs';
 import { mouse } from '@nut-tree-fork/nut-js';
 import type { ScheduleConfig } from '../shared/types';
+import electronUpdater from 'electron-updater';
+import log from 'electron-log';
+
+const { autoUpdater } = electronUpdater;
 
 import {
   IPC_CHANNELS,
@@ -42,6 +46,64 @@ let scheduleTransitionTimer: NodeJS.Timeout | null = null;
 let currentScheduleConfig: ScheduleConfig | null = null;
 let currentIntervalMs: number = 0;
 let lastSetPosition: { x: number; y: number } | null = null;
+
+// Auto-update state
+let autoUpdatesEnabled = true;
+let isManualUpdate = false;
+
+// ============================================================================
+// AUTO-UPDATER CONFIGURATION
+// ============================================================================
+
+autoUpdater.autoDownload = false;
+autoUpdater.autoInstallOnAppQuit = false;
+log.initialize();
+
+autoUpdater.on('update-available', async (info) => {
+  try {
+    log.info(`Update available: ${info.version}`);
+
+    const shouldDownload = isManualUpdate || autoUpdatesEnabled;
+
+    if (shouldDownload) {
+      await autoUpdater.downloadUpdate();
+    } else {
+      log.info('Auto-update download skipped (auto-updates disabled)');
+    }
+
+    if (shouldDownload && mainApplicationWindow && !mainApplicationWindow.isDestroyed()) {
+      mainApplicationWindow.webContents.send(IPC_CHANNELS.SET_IS_UP_TO_DATE, false);
+    }
+  } catch (error) {
+    log.error('Update download failed:', error);
+  } finally {
+    if (isManualUpdate) {
+      isManualUpdate = false;
+    }
+  }
+});
+
+autoUpdater.on('update-not-available', () => {
+  if(isManualUpdate) {
+    log.info('No updates available');
+
+    if (mainApplicationWindow && !mainApplicationWindow.isDestroyed()) {
+      mainApplicationWindow.webContents.send(IPC_CHANNELS.SET_IS_UP_TO_DATE, true);
+    }
+
+    isManualUpdate = false;
+  }
+});
+
+autoUpdater.on('update-downloaded', (info) => {
+  log.info('Update downloaded:', info.version);
+
+  if (mainApplicationWindow && !mainApplicationWindow.isDestroyed()) {
+    mainApplicationWindow.webContents.send(IPC_CHANNELS.UPDATE_DOWNLOADED, {
+      version: info.version
+    });
+  }
+});
 
 // ============================================================================
 // PUBLIC API - IPC HANDLERS
@@ -103,6 +165,39 @@ nativeTheme.on(ELECTRON_EVENTS.UPDATED, () => {
   }
 });
 
+// === AUTO-UPDATER ===
+ipcMain.handle(IPC_CHANNELS.UPDATE_CHECK_FOR_UPDATES, async () => {
+  try {
+    log.info('Manual update check requested');
+
+    isManualUpdate = true;
+
+    await checkUpdates();
+  } catch (error) {
+    log.error('Manual update check failed:', error);
+  }
+});
+
+ipcMain.handle(IPC_CHANNELS.UPDATE_RESTART_AND_INSTALL, () => {
+  try {
+    log.info('Restart requested - calling quitAndInstall');
+
+    setImmediate(() => {
+      log.info('Calling quitAndInstall()');
+
+      autoUpdater.quitAndInstall(false, true);
+    });
+  } catch (error) {
+    log.error('quitAndInstall() failed:', error);
+
+    throw error;
+  }
+});
+
+ipcMain.on(IPC_CHANNELS.UPDATE_AUTO_ENABLED_CHANGED, (_, enabled: boolean) => {
+  autoUpdatesEnabled = enabled;
+});
+
 if (process.platform === 'win32') app.setAppUserModelId('MoveIt');
 
 // === APP LIFECYCLE ===
@@ -120,6 +215,11 @@ app.whenReady().then(() => {
   createSystemTray();
 
   app.on(ELECTRON_EVENTS.ACTIVATE, () => !BrowserWindow.getAllWindows().length && createMainApplicationWindow());
+
+  if (process.env.NODE_ENV !== 'development') {
+    setTimeout(checkUpdates, 3000);
+    setInterval(checkUpdates, 24 * 60 * 60 * 1000);
+  }
 });
 
 powerMonitor.on('resume', () => {
@@ -172,6 +272,16 @@ const createSystemTray = () => {
     systemTray.on(ELECTRON_EVENTS.CLICK, () =>
       mainApplicationWindow?.isVisible() ? mainApplicationWindow.hide() : mainApplicationWindow?.show()
     );
+  }
+};
+
+const checkUpdates = async () => {
+  try {
+    log.info('Checking for updates...');
+
+    await autoUpdater.checkForUpdates();
+  } catch (error) {
+    log.error('Update check failed:', error);
   }
 };
 

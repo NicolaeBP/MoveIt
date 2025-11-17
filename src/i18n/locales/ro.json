@@ -99,5 +99,17 @@
   "window.maximize": "Maximizează fereastra",
   "window.hideToTray": "Ascunde în bara de sistem",
   "windowControls.trayNotification": "Aplicația a fost minimizată în bara de sistem",
-  "settings.showTrayMessage": "Afișează notificare când minimizez în bara de sistem"
+  "settings.showTrayMessage": "Afișează notificare când minimizez în bara de sistem",
+  "settings.autoUpdates": "Activează actualizări automate",
+  "settings.checkForUpdates": "Verifică actualizări",
+  "settings.updateAvailable": "Actualizare Nouă Disponibilă",
+  "updates.title": "Actualizare disponibilă",
+  "updates.newVersionAvailable": "Versiunea {version} este disponibilă",
+  "updates.downloading": "Se descarcă actualizarea...",
+  "updates.restartNow": "Repornește acum",
+  "updates.checking": "Se verifică actualizările...",
+  "updates.upToDate": "Folosești deja ultima versiune",
+  "updates.checkError": "Eroare la verificarea actualizărilor",
+  "updates.readyToInstall": "Actualizările sunt gata de instalare, repornește aplicația pentru a actualiza",
+  "common.close": "Închide"
 }

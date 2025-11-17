@@ -99,5 +99,17 @@
   "window.maximize": "Maximize window",
   "window.hideToTray": "Hide to tray",
   "windowControls.trayNotification": "应用程序已最小化到系统托盘",
-  "settings.showTrayMessage": "最小化到托盘时显示通知"
+  "settings.showTrayMessage": "最小化到托盘时显示通知",
+  "settings.autoUpdates": "启用自动更新",
+  "settings.checkForUpdates": "检查更新",
+  "settings.updateAvailable": "有新更新可用",
+  "updates.title": "更新可用",
+  "updates.newVersionAvailable": "版本 {version} 可用",
+  "updates.downloading": "正在下载更新...",
+  "updates.restartNow": "立即重启",
+  "updates.checking": "正在检查更新...",
+  "updates.upToDate": "已使用最新版本",
+  "updates.checkError": "检查更新失败",
+  "updates.readyToInstall": "更新已准备好安装，请重启应用程序以升级",
+  "common.close": "关闭"
 }

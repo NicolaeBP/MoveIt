@@ -14,8 +14,8 @@ export const useAppInitialization = () => {
   const resolvedTheme = useThemeStore((state) => (state.theme === 'auto' ? state.systemTheme : state.theme));
   const setMovementStatus = useAppStore((state) => state.setMovementStatus);
   const autoUpdatesEnabled = useAppStore((state) => state.autoUpdatesEnabled);
-  const setLatestAvailableVersion = useAppStore((state) => state.setLatestAvailableVersion);
   const openModal = useAppStore((state) => state.openModal);
+  const setIsUpToDate = useAppStore((state) => state.setIsUpToDate);
 
   // Initialize locale and theme
   useEffect(() => {
@@ -52,7 +52,7 @@ export const useAppInitialization = () => {
 
   // Subscribe to movement status changes
   useEffect(() => {
-    const mouseMoverAPI = window.electronAPI?.mouseMover;
+    const mouseMoverAPI = globalThis.electronAPI?.mouseMover;
 
     return mouseMoverAPI?.onRunningStateChanged?.((status: 'moving' | 'waiting' | 'stopped') => {
       setMovementStatus(status);
@@ -61,26 +61,24 @@ export const useAppInitialization = () => {
 
   // Subscribe to auto-update events
   useEffect(() => {
-    // Notify main process of initial autoUpdatesEnabled value
-    window.electronAPI.updates.notifyAutoUpdatesChanged(autoUpdatesEnabled);
+    globalThis.electronAPI.updates.notifyAutoUpdatesChanged(autoUpdatesEnabled);
 
-    // Listen for automatic update downloaded (background check every 24h)
-    const unsubscribe = window.electronAPI.updates.onUpdateDownloaded(
-      (info: { version: string; releaseNotes: string }) => {
-        // Store the latest version for display in About section
-        setLatestAvailableVersion(info.version);
-
-        // Show modal with restart button
+    return globalThis.electronAPI.updates.onUpdateDownloaded(
+      (info: { version: string }) => {
         openModal({
           title: <FormattedMessage id="updates.title" />,
-          body: <UpdateModal version={info.version} releaseNotes={info.releaseNotes} isDownloaded={true} />,
+          body: <UpdateModal version={info.version} />,
         });
       }
     );
-
-    return unsubscribe;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    return globalThis.electronAPI.updates.onSetIsUpToDate((isUpToDate: boolean) => {
+      setIsUpToDate(isUpToDate);
+    });
+  }, [setIsUpToDate]);
 
   return { isInitialized };
 };

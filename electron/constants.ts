@@ -8,6 +8,11 @@ export const IPC_CHANNELS = {
   GET_SYSTEM_LOCALE: 'locale:get-system',
   THEME_SHOULD_USE_DARK_COLORS: 'theme:should-use-dark-colors',
   THEME_UPDATED: 'theme:updated',
+  UPDATE_CHECK_FOR_UPDATES: 'update:check-for-updates',
+  UPDATE_RESTART_AND_INSTALL: 'update:restart-and-install',
+  UPDATE_AUTO_ENABLED_CHANGED: 'update:auto-enabled-changed',
+  UPDATE_DOWNLOADED: 'update:downloaded',
+  SET_IS_UP_TO_DATE: 'update:set-is-up-to-date',
 } as const;
 
 export const DEV_SERVER_PORT = 5173;

@@ -280,6 +280,81 @@ We welcome contributions! Please follow these steps:
 4. Push tags: `git push --tags`
 5. GitHub Actions will automatically build and create a release
 
+### 🪟 Windows Store Release Workflow
+
+MoveIt can be distributed through the Microsoft Store in addition to direct downloads.
+
+#### Prerequisites
+
+1. **Microsoft Partner Center Account**
+   - **Cost:** $19 USD one-time registration fee (individual)
+   - **Register:** https://partner.microsoft.com/dashboard
+   - **What you get:** Access to submit apps to Microsoft Store
+
+2. **Get Publisher ID**
+   - After registration, go to Account Settings → Certificates
+   - Copy your Publisher ID (format: `CN=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX`)
+
+#### Build Windows Store Package
+
+**Important:** Windows Store packages (AppX) can only be built on Windows. We use GitHub Actions for this.
+
+1. **Update Publisher ID in `package.json`**
+   ```json
+   "appx": {
+     "publisher": "CN=YOUR_ACTUAL_PUBLISHER_ID"
+   }
+   ```
+
+2. **Trigger GitHub Actions Workflow**
+   - Go to: https://github.com/NicolaeBP/MoveIt/actions/workflows/build-windows-store.yml
+   - Click **"Run workflow"**
+   - Enter version number (e.g., `1.0.4`)
+   - Click **"Run workflow"**
+
+3. **Download AppX Package**
+   - Wait for workflow to complete (~5-10 minutes)
+   - Download artifact: `windows-store-package-X.X.X`
+   - Extract to find `.appx` file
+
+#### Submit to Microsoft Store
+
+1. **Create App Listing**
+   - Go to Partner Center → Apps and games → New app
+   - Reserve app name: "MoveIt"
+   - Fill in basic information
+
+2. **Upload Package**
+   - Create new submission
+   - Upload `.appx` file from GitHub Actions
+   - Can upload directly via web (no special tools needed)
+
+3. **Complete Store Listing**
+   - **Screenshots:** Min 1, recommended 3-4 (PNG/JPG)
+   - **Description:** Professional productivity tool for mouse automation
+   - **Keywords:** mouse, automation, productivity, utility, remote work
+   - **Privacy Policy URL:** https://nicolaebp.github.io/MoveIt/PRIVACY_POLICY
+   - **Support URL:** https://github.com/NicolaeBP/MoveIt
+   - **Category:** Productivity or Utilities
+
+4. **Submit for Review**
+   - Review timeline: 1-3 days (typically faster than Mac App Store)
+   - Email notification when approved/rejected
+
+#### Important Notes
+
+- ⚠️ **AppX packages must be built on Windows** (GitHub Actions handles this)
+- ⚠️ **Mouse automation may face policy review** - Frame as productivity tool
+- ⚠️ **Sandboxing concerns** - Test package before submission if possible
+- ✅ **Keep GitHub releases** - Primary distribution method regardless
+
+#### Cost Comparison
+
+| Store | Registration Fee | Renewal |
+|-------|-----------------|---------|
+| Microsoft Store | $19 one-time | None |
+| Mac App Store | $99/year | Annual |
+
 ### 🌍 Internationalization
 
 Adding a new language:
@@ -325,7 +400,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - **Issues:** [GitHub Issues](https://github.com/NicolaeBP/MoveIt/issues)
 - **Discussions:** [GitHub Discussions](https://github.com/NicolaeBP/MoveIt/discussions)
-- **Email:** nicolaebalicapfa@gmail.com
+- **Email:** nicolaebalica@bpconsulting.pro
 
 ---
 

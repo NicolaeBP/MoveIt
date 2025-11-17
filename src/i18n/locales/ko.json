@@ -97,5 +97,16 @@
   "window.maximize": "Maximize window",
   "window.hideToTray": "Hide to tray",
   "windowControls.trayNotification": "앱이 시스템 트레이로 최소화되었습니다",
-  "settings.showTrayMessage": "트레이로 최소화할 때 알림 표시"
+  "settings.showTrayMessage": "트레이로 최소화할 때 알림 표시",
+  "settings.autoUpdates": "자동 업데이트 활성화",
+  "settings.checkForUpdates": "업데이트 확인",
+  "updates.title": "업데이트 사용 가능",
+  "updates.newVersionAvailable": "버전 {version} 사용 가능",
+  "updates.downloading": "업데이트 다운로드 중...",
+  "updates.restartNow": "지금 재시작",
+  "updates.checking": "업데이트 확인 중...",
+  "updates.upToDate": "이미 최신 버전을 사용 중입니다",
+  "updates.checkError": "업데이트 확인 실패",
+  "updates.readyToInstall": "업데이트가 설치 준비되었습니다. 업그레이드하려면 애플리케이션을 다시 시작하세요",
+  "common.close": "닫기"
 }

@@ -99,5 +99,17 @@
   "window.maximize": "Maximize window",
   "window.hideToTray": "Hide to tray",
   "windowControls.trayNotification": "Anwendung in die Systemleiste minimiert",
-  "settings.showTrayMessage": "Benachrichtigung anzeigen beim Minimieren in die Systemleiste"
+  "settings.showTrayMessage": "Benachrichtigung anzeigen beim Minimieren in die Systemleiste",
+  "settings.autoUpdates": "Automatische Updates aktivieren",
+  "settings.checkForUpdates": "Nach Updates suchen",
+  "settings.updateAvailable": "Neues Update Verfügbar",
+  "updates.title": "Update verfügbar",
+  "updates.newVersionAvailable": "Version {version} ist verfügbar",
+  "updates.downloading": "Update wird heruntergeladen...",
+  "updates.restartNow": "Jetzt neu starten",
+  "updates.checking": "Suche nach Updates...",
+  "updates.upToDate": "Sie verwenden bereits die neueste Version",
+  "updates.checkError": "Fehler beim Suchen nach Updates",
+  "updates.readyToInstall": "Updates sind bereit zur Installation, starten Sie die Anwendung neu, um zu aktualisieren",
+  "common.close": "Schließen"
 }

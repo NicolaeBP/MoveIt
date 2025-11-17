@@ -4,4 +4,6 @@ declare global {
   interface Window {
     electronAPI: ElectronAPI;
   }
+
+  var electronAPI: ElectronAPI;
 }

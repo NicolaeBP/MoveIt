@@ -52,7 +52,7 @@ const config = {
     icon: 'assets/icon.ico',
     artifactName: '${productName} Setup ${version}.${ext}',
     signtoolOptions: {
-      sign: './scripts/sign-windows.cjs',
+      sign: './scripts/sign-windows-yubikey.cjs',
     },
   },
   nsis: {

@@ -99,5 +99,16 @@
   "window.maximize": "Maximize window",
   "window.hideToTray": "Hide to tray",
   "windowControls.trayNotification": "アプリがシステムトレイに最小化されました",
-  "settings.showTrayMessage": "トレイに最小化するときに通知を表示"
+  "settings.showTrayMessage": "トレイに最小化するときに通知を表示",
+  "settings.autoUpdates": "自動更新を有効にする",
+  "settings.checkForUpdates": "更新を確認",
+  "updates.title": "更新が利用可能",
+  "updates.newVersionAvailable": "バージョン {version} が利用可能です",
+  "updates.downloading": "更新をダウンロード中...",
+  "updates.restartNow": "今すぐ再起動",
+  "updates.checking": "更新を確認中...",
+  "updates.upToDate": "既に最新バージョンを使用しています",
+  "updates.checkError": "更新の確認に失敗しました",
+  "updates.readyToInstall": "更新のインストールの準備ができました。アップグレードするにはアプリケーションを再起動してください",
+  "common.close": "閉じる"
 }
