@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Windows Code Signing Script - YubiKey Edition
  * Signs Windows executables using YubiKey PIV hardware token
