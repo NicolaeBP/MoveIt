@@ -240,9 +240,77 @@ describe('useAppStore', () => {
         expect(persisted.state).toHaveProperty('scheduleConfig');
         expect(persisted.state).toHaveProperty('scheduleEnabled');
         expect(persisted.state).toHaveProperty('showTrayMessage');
+        expect(persisted.state).toHaveProperty('autoUpdatesEnabled');
         expect(persisted.state).not.toHaveProperty('movementStatus');
         expect(persisted.state).not.toHaveProperty('modalContent');
+        expect(persisted.state).not.toHaveProperty('isUpToDate');
       });
+    });
+  });
+
+  describe('autoUpdatesEnabled', () => {
+    it('defaults to true', () => {
+      expect(useAppStore.getState().autoUpdatesEnabled).toBe(true);
+    });
+  });
+
+  describe('isUpToDate', () => {
+    it('defaults to null', () => {
+      expect(useAppStore.getState().isUpToDate).toBeNull();
+    });
+  });
+
+  describe('setAutoUpdatesEnabled', () => {
+    it('updates autoUpdatesEnabled to false', () => {
+      useAppStore.getState().setAutoUpdatesEnabled(false);
+
+      expect(useAppStore.getState().autoUpdatesEnabled).toBe(false);
+    });
+
+    it('updates autoUpdatesEnabled to true', () => {
+      useAppStore.setState({ autoUpdatesEnabled: false });
+
+      useAppStore.getState().setAutoUpdatesEnabled(true);
+
+      expect(useAppStore.getState().autoUpdatesEnabled).toBe(true);
+    });
+
+    it('persists autoUpdatesEnabled to localStorage', () => {
+      useAppStore.getState().setAutoUpdatesEnabled(false);
+
+      const persisted = JSON.parse(localStorage.getItem('moveit-storage') || '{}');
+
+      expect(persisted.state.autoUpdatesEnabled).toBe(false);
+    });
+  });
+
+  describe('setIsUpToDate', () => {
+    it('updates isUpToDate to true', () => {
+      useAppStore.getState().setIsUpToDate(true);
+
+      expect(useAppStore.getState().isUpToDate).toBe(true);
+    });
+
+    it('updates isUpToDate to false', () => {
+      useAppStore.getState().setIsUpToDate(false);
+
+      expect(useAppStore.getState().isUpToDate).toBe(false);
+    });
+
+    it('updates isUpToDate to null', () => {
+      useAppStore.setState({ isUpToDate: true });
+
+      useAppStore.getState().setIsUpToDate(null);
+
+      expect(useAppStore.getState().isUpToDate).toBeNull();
+    });
+
+    it('does not persist isUpToDate to localStorage', () => {
+      useAppStore.getState().setIsUpToDate(true);
+
+      const persisted = JSON.parse(localStorage.getItem('moveit-storage') || '{}');
+
+      expect(persisted.state).not.toHaveProperty('isUpToDate');
     });
   });
 });

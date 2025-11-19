@@ -21,7 +21,20 @@ describe('useAppInitialization', () => {
 
     useAppStore.setState({
       setMovementStatus: vi.fn(),
+      autoUpdatesEnabled: true,
+      openModal: vi.fn(),
+      setIsUpToDate: vi.fn(),
     });
+
+    globalThis.electronAPI = {
+      ...globalThis.electronAPI,
+      updates: {
+        ...globalThis.electronAPI.updates,
+        notifyAutoUpdatesChanged: vi.fn(),
+        onUpdateDownloaded: vi.fn().mockReturnValue(() => {}),
+        onSetIsUpToDate: vi.fn().mockReturnValue(() => {}),
+      },
+    };
   });
 
   describe('when hook is initialized', () => {
@@ -88,6 +101,138 @@ describe('useAppInitialization', () => {
       renderHook(() => useAppInitialization());
 
       expect(document.documentElement.classList.contains('dark')).toBe(true);
+    });
+  });
+
+  describe('when auto-update subscription is initialized', () => {
+    it('calls notifyAutoUpdatesChanged with autoUpdatesEnabled state', () => {
+      const notifyMock = vi.fn();
+
+      globalThis.electronAPI.updates.notifyAutoUpdatesChanged = notifyMock;
+
+      useAppStore.setState({ autoUpdatesEnabled: true });
+
+      renderHook(() => useAppInitialization());
+
+      expect(notifyMock).toHaveBeenCalledWith(true);
+    });
+
+    it('subscribes to onUpdateDownloaded event', () => {
+      const onUpdateDownloadedMock = vi.fn().mockReturnValue(() => {});
+
+      globalThis.electronAPI.updates.onUpdateDownloaded = onUpdateDownloadedMock;
+
+      renderHook(() => useAppInitialization());
+
+      expect(onUpdateDownloadedMock).toHaveBeenCalled();
+    });
+  });
+
+  describe('when update is downloaded', () => {
+    it('opens modal with update version', () => {
+      const openModalMock = vi.fn();
+
+      useAppStore.setState({ openModal: openModalMock });
+
+      let updateCallback: ((info: { version: string }) => void) | undefined;
+
+      globalThis.electronAPI.updates.onUpdateDownloaded = vi.fn((callback) => {
+        updateCallback = callback;
+
+        return () => {};
+      });
+
+      renderHook(() => useAppInitialization());
+
+      // Simulate update downloaded event
+      updateCallback?.({ version: '1.0.5' });
+
+      expect(openModalMock).toHaveBeenCalledOnce();
+
+      const callArg = openModalMock.mock.calls[0][0];
+
+      expect(callArg).toHaveProperty('title');
+      expect(callArg).toHaveProperty('body');
+    });
+  });
+
+  describe('when isUpToDate subscription is initialized', () => {
+    it('subscribes to onSetIsUpToDate event', () => {
+      const onSetIsUpToDateMock = vi.fn().mockReturnValue(() => {});
+
+      globalThis.electronAPI.updates.onSetIsUpToDate = onSetIsUpToDateMock;
+
+      renderHook(() => useAppInitialization());
+
+      expect(onSetIsUpToDateMock).toHaveBeenCalled();
+    });
+  });
+
+  describe('when isUpToDate event is triggered', () => {
+    it('calls setIsUpToDate with true', () => {
+      const setIsUpToDateMock = vi.fn();
+
+      useAppStore.setState({ setIsUpToDate: setIsUpToDateMock });
+
+      let isUpToDateCallback: ((isUpToDate: boolean) => void) | undefined;
+
+      globalThis.electronAPI.updates.onSetIsUpToDate = vi.fn((callback) => {
+        isUpToDateCallback = callback;
+
+        return () => {};
+      });
+
+      renderHook(() => useAppInitialization());
+
+      // Simulate isUpToDate event
+      isUpToDateCallback?.(true);
+
+      expect(setIsUpToDateMock).toHaveBeenCalledWith(true);
+    });
+
+    it('calls setIsUpToDate with false', () => {
+      const setIsUpToDateMock = vi.fn();
+
+      useAppStore.setState({ setIsUpToDate: setIsUpToDateMock });
+
+      let isUpToDateCallback: ((isUpToDate: boolean) => void) | undefined;
+
+      globalThis.electronAPI.updates.onSetIsUpToDate = vi.fn((callback) => {
+        isUpToDateCallback = callback;
+
+        return () => {};
+      });
+
+      renderHook(() => useAppInitialization());
+
+      // Simulate isUpToDate event
+      isUpToDateCallback?.(false);
+
+      expect(setIsUpToDateMock).toHaveBeenCalledWith(false);
+    });
+  });
+
+  describe('when hook is unmounted', () => {
+    it('cleans up onUpdateDownloaded subscription', () => {
+      const cleanupMock = vi.fn();
+      globalThis.electronAPI.updates.onUpdateDownloaded = vi.fn().mockReturnValue(cleanupMock);
+
+      const { unmount } = renderHook(() => useAppInitialization());
+
+      unmount();
+
+      expect(cleanupMock).toHaveBeenCalled();
+    });
+
+    it('cleans up onSetIsUpToDate subscription', () => {
+      const cleanupMock = vi.fn();
+      globalThis.electronAPI.updates.onSetIsUpToDate = vi.fn().mockReturnValue(cleanupMock);
+
+      const { unmount } = renderHook(() => useAppInitialization());
+
+      unmount();
+
+      expect(cleanupMock).toHaveBeenCalled();
     });
   });
 });

@@ -22,7 +22,20 @@ describe('App', () => {
 
     useAppStore.setState({
       setMovementStatus: vi.fn(),
+      autoUpdatesEnabled: true,
+      openModal: vi.fn(),
+      setIsUpToDate: vi.fn(),
     });
+
+    globalThis.electronAPI = {
+      ...globalThis.electronAPI,
+      updates: {
+        ...globalThis.electronAPI.updates,
+        notifyAutoUpdatesChanged: vi.fn(),
+        onUpdateDownloaded: vi.fn().mockReturnValue(() => {}),
+        onSetIsUpToDate: vi.fn().mockReturnValue(() => {}),
+      },
+    };
   });
 
   describe('when not initialized', () => {
