@@ -35,8 +35,7 @@ const electronAPI = {
     },
   },
   updates: {
-    checkForUpdates: (): Promise<{ version?: string } | undefined> =>
-      ipcRenderer.invoke(IPC_CHANNELS.UPDATE_CHECK_FOR_UPDATES),
+    checkForUpdates: (): Promise<{ version?: string } | undefined> => ipcRenderer.invoke(IPC_CHANNELS.UPDATE_CHECK_FOR_UPDATES),
     restartAndInstall: (): Promise<void> => ipcRenderer.invoke(IPC_CHANNELS.UPDATE_RESTART_AND_INSTALL),
     notifyAutoUpdatesChanged: (enabled: boolean): void => ipcRenderer.send(IPC_CHANNELS.UPDATE_AUTO_ENABLED_CHANGED, enabled),
     onUpdateDownloaded: (callback: (info: { version: string }) => void) => {

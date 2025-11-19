@@ -84,7 +84,7 @@ autoUpdater.on('update-available', async (info) => {
 });
 
 autoUpdater.on('update-not-available', () => {
-  if(isManualUpdate) {
+  if (isManualUpdate) {
     log.info('No updates available');
 
     if (mainApplicationWindow && !mainApplicationWindow.isDestroyed()) {
@@ -100,7 +100,7 @@ autoUpdater.on('update-downloaded', (info) => {
 
   if (mainApplicationWindow && !mainApplicationWindow.isDestroyed()) {
     mainApplicationWindow.webContents.send(IPC_CHANNELS.UPDATE_DOWNLOADED, {
-      version: info.version
+      version: info.version,
     });
   }
 });

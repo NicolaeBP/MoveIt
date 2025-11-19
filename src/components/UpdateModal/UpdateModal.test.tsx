@@ -30,11 +30,7 @@ describe('UpdateModal', () => {
     it('displays new version message with version number', () => {
       render(<UpdateModal version="1.0.5" />, { wrapper });
 
-      expect(
-        screen.getByText(
-          messages.en['updates.newVersionAvailable'].replace('{version}', '1.0.5')
-        )
-      ).toBeInTheDocument();
+      expect(screen.getByText(messages.en['updates.newVersionAvailable'].replace('{version}', '1.0.5'))).toBeInTheDocument();
     });
 
     it('displays ready to install message', () => {

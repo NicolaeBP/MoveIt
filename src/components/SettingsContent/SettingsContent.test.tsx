@@ -170,9 +170,7 @@ describe('SettingsContent', () => {
     });
 
     it('shows checking text when checking for updates', async () => {
-      const checkForUpdatesMock = vi.fn().mockImplementation(
-        () => new Promise((resolve) => setTimeout(resolve, 100))
-      );
+      const checkForUpdatesMock = vi.fn().mockImplementation(() => new Promise((resolve) => setTimeout(resolve, 100)));
 
       globalThis.electronAPI.updates.checkForUpdates = checkForUpdatesMock;
 

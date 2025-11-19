@@ -63,14 +63,12 @@ export const useAppInitialization = () => {
   useEffect(() => {
     globalThis.electronAPI.updates.notifyAutoUpdatesChanged(autoUpdatesEnabled);
 
-    return globalThis.electronAPI.updates.onUpdateDownloaded(
-      (info: { version: string }) => {
-        openModal({
-          title: <FormattedMessage id="updates.title" />,
-          body: <UpdateModal version={info.version} />,
-        });
-      }
-    );
+    return globalThis.electronAPI.updates.onUpdateDownloaded((info: { version: string }) => {
+      openModal({
+        title: <FormattedMessage id="updates.title" />,
+        body: <UpdateModal version={info.version} />,
+      });
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -34,10 +34,7 @@ export const UpdateModal = ({ version }: UpdateModalProps) => {
           <FormattedMessage id="common.close" />
         </button>
 
-        <button
-          onClick={handleRestart}
-          className="rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600"
-        >
+        <button onClick={handleRestart} className="rounded-lg bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-600">
           <FormattedMessage id="updates.restartNow" />
         </button>
       </div>
