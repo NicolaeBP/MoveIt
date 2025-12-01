@@ -19,7 +19,7 @@ const App = () => {
 
   return (
     <IntlProvider locale={locale} messages={messages[locale]} defaultLocale="en">
-      <main className="flex flex-col select-none w-full h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-900 dark:to-gray-800 relative">
+      <main className="flex flex-col select-none w-full h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-gray-900 dark:to-gray-800 relative border border-gray-300 dark:border-gray-600 box-border">
         <WindowControls />
 
         <section className="flex-1 overflow-y-auto overflow-x-hidden scrollbar-hide px-8">

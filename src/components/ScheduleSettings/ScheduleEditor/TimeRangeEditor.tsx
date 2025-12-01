@@ -1,5 +1,6 @@
 import React from 'react';
 import { useIntl, FormattedMessage } from 'react-intl';
+import TimeSelect from '@/components/TimeSelect/TimeSelect';
 
 interface TimeRangeEditorProps {
   timeRanges: Array<{ start: string; end: string }>;
@@ -21,26 +22,24 @@ const TimeRangeEditor: React.FC<TimeRangeEditorProps> = ({
   const intl = useIntl();
 
   return (
-    <div className="mt-3 ml-7 space-y-2">
+    <div className="mt-3 space-y-2">
       {timeRanges.map((range, idx) => (
-        <div key={`edit-${range.start}-${range.end}-${idx}`} className="flex items-center gap-2">
-          <input
-            type="time"
-            value={range.start}
-            onChange={(e) => onUpdateTimeRange(idx, 'start', e.target.value)}
-            className="px-2 py-1 text-sm border rounded dark:bg-gray-700 dark:border-gray-600"
-            aria-label={`${intl.formatMessage({ id: 'schedule.startTime' })} ${idx + 1}`}
-          />
+        <div key={`edit-${range.start}-${range.end}-${idx}`} className="flex flex-col items-start gap-1">
+          <div className="flex items-center gap-2">
+            <TimeSelect
+              value={range.start}
+              onChange={(value) => onUpdateTimeRange(idx, 'start', value)}
+              ariaLabelPrefix={`${intl.formatMessage({ id: 'schedule.startTime' })} ${idx + 1}`}
+            />
 
-          <span className="text-sm text-gray-600 dark:text-gray-400">-</span>
+            <span className="text-sm text-gray-600 dark:text-gray-400">-</span>
 
-          <input
-            type="time"
-            value={range.end}
-            onChange={(e) => onUpdateTimeRange(idx, 'end', e.target.value)}
-            className="px-2 py-1 text-sm border rounded dark:bg-gray-700 dark:border-gray-600"
-            aria-label={`${intl.formatMessage({ id: 'schedule.endTime' })} ${idx + 1}`}
-          />
+            <TimeSelect
+              value={range.end}
+              onChange={(value) => onUpdateTimeRange(idx, 'end', value)}
+              ariaLabelPrefix={`${intl.formatMessage({ id: 'schedule.endTime' })} ${idx + 1}`}
+            />
+          </div>
 
           {Boolean(timeRanges.length) && (
             <button onClick={() => onRemoveTimeRange(idx)} className="text-red-500 hover:text-red-600 text-sm">

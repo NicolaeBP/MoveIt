@@ -13,7 +13,7 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
 
 describe('TimeRangeEditor', () => {
   describe('when component renders with one time range', () => {
-    it('displays start and end time inputs', () => {
+    it('displays start and end time selects with correct values', () => {
       const timeRanges = [{ start: '09:00', end: '17:00' }];
 
       render(
@@ -28,11 +28,15 @@ describe('TimeRangeEditor', () => {
         { wrapper }
       );
 
-      const startInput = screen.getByLabelText(/Start time 1/) as HTMLInputElement;
-      const endInput = screen.getByLabelText(/End time 1/) as HTMLInputElement;
+      const startHours = screen.getByLabelText(`${messages.en['schedule.startTime']} 1 ${messages.en['time.hours']}`) as HTMLSelectElement;
+      const startMinutes = screen.getByLabelText(`${messages.en['schedule.startTime']} 1 ${messages.en['time.minutes']}`) as HTMLSelectElement;
+      const endHours = screen.getByLabelText(`${messages.en['schedule.endTime']} 1 ${messages.en['time.hours']}`) as HTMLSelectElement;
+      const endMinutes = screen.getByLabelText(`${messages.en['schedule.endTime']} 1 ${messages.en['time.minutes']}`) as HTMLSelectElement;
 
-      expect(startInput.value).toBe('09:00');
-      expect(endInput.value).toBe('17:00');
+      expect(startHours.value).toBe('09');
+      expect(startMinutes.value).toBe('00');
+      expect(endHours.value).toBe('17');
+      expect(endMinutes.value).toBe('00');
     });
 
     it('displays remove button', () => {
@@ -73,10 +77,10 @@ describe('TimeRangeEditor', () => {
         { wrapper }
       );
 
-      expect(screen.getByLabelText(/Start time 1/)).toBeInTheDocument();
-      expect(screen.getByLabelText(/End time 1/)).toBeInTheDocument();
-      expect(screen.getByLabelText(/Start time 2/)).toBeInTheDocument();
-      expect(screen.getByLabelText(/End time 2/)).toBeInTheDocument();
+      expect(screen.getByLabelText(`${messages.en['schedule.startTime']} 1 ${messages.en['time.hours']}`)).toBeInTheDocument();
+      expect(screen.getByLabelText(`${messages.en['schedule.endTime']} 1 ${messages.en['time.hours']}`)).toBeInTheDocument();
+      expect(screen.getByLabelText(`${messages.en['schedule.startTime']} 2 ${messages.en['time.hours']}`)).toBeInTheDocument();
+      expect(screen.getByLabelText(`${messages.en['schedule.endTime']} 2 ${messages.en['time.hours']}`)).toBeInTheDocument();
     });
   });
 
@@ -141,7 +145,7 @@ describe('TimeRangeEditor', () => {
     });
   });
 
-  describe('when start time is changed', () => {
+  describe('when start time hour is changed', () => {
     it('calls onUpdateTimeRange with correct parameters', () => {
       const onUpdateTimeRangeMock = vi.fn();
       const timeRanges = [{ start: '09:00', end: '17:00' }];
@@ -158,15 +162,15 @@ describe('TimeRangeEditor', () => {
         { wrapper }
       );
 
-      const startInput = screen.getByLabelText(/Start time 1/);
+      const startHoursSelect = screen.getByLabelText(`${messages.en['schedule.startTime']} 1 ${messages.en['time.hours']}`);
 
-      fireEvent.change(startInput, { target: { value: '10:00' } });
+      fireEvent.change(startHoursSelect, { target: { value: '10' } });
 
       expect(onUpdateTimeRangeMock).toHaveBeenCalledWith(0, 'start', '10:00');
     });
   });
 
-  describe('when end time is changed', () => {
+  describe('when end time hour is changed', () => {
     it('calls onUpdateTimeRange with correct parameters', () => {
       const onUpdateTimeRangeMock = vi.fn();
       const timeRanges = [{ start: '09:00', end: '17:00' }];
@@ -183,9 +187,9 @@ describe('TimeRangeEditor', () => {
         { wrapper }
       );
 
-      const endInput = screen.getByLabelText(/End time 1/);
+      const endHoursSelect = screen.getByLabelText(`${messages.en['schedule.endTime']} 1 ${messages.en['time.hours']}`);
 
-      fireEvent.change(endInput, { target: { value: '18:00' } });
+      fireEvent.change(endHoursSelect, { target: { value: '18' } });
 
       expect(onUpdateTimeRangeMock).toHaveBeenCalledWith(0, 'end', '18:00');
     });

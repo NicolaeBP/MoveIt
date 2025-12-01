@@ -32,7 +32,7 @@ const Modal = () => {
   if (!modalContent) return null;
 
   return (
-    <dialog className="fixed inset-0 bg-white dark:bg-gray-800 z-50 flex flex-col w-full h-full">
+    <dialog className="fixed inset-0 bg-white dark:bg-gray-800 z-50 flex flex-col w-full h-full border border-gray-300 dark:border-gray-600 box-border">
       <header className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-gray-700">
         <h2 className="text-xl font-semibold text-slate-800 dark:text-gray-100">{modalContent.title}</h2>
 
