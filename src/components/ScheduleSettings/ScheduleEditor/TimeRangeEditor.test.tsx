@@ -29,7 +29,9 @@ describe('TimeRangeEditor', () => {
       );
 
       const startHours = screen.getByLabelText(`${messages.en['schedule.startTime']} 1 ${messages.en['time.hours']}`) as HTMLSelectElement;
-      const startMinutes = screen.getByLabelText(`${messages.en['schedule.startTime']} 1 ${messages.en['time.minutes']}`) as HTMLSelectElement;
+      const startMinutes = screen.getByLabelText(
+        `${messages.en['schedule.startTime']} 1 ${messages.en['time.minutes']}`
+      ) as HTMLSelectElement;
       const endHours = screen.getByLabelText(`${messages.en['schedule.endTime']} 1 ${messages.en['time.hours']}`) as HTMLSelectElement;
       const endMinutes = screen.getByLabelText(`${messages.en['schedule.endTime']} 1 ${messages.en['time.minutes']}`) as HTMLSelectElement;
 

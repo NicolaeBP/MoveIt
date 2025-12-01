@@ -41,7 +41,7 @@ const TimeSelect: React.FC<TimeSelectProps> = ({ value, onChange, ariaLabelPrefi
       </select>
 
       <span className="text-gray-600 dark:text-gray-400 font-medium">:</span>
-      
+
       <select
         value={minutes}
         onChange={handleMinuteChange}
