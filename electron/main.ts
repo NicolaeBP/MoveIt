@@ -198,6 +198,15 @@ ipcMain.on(IPC_CHANNELS.UPDATE_AUTO_ENABLED_CHANGED, (_, enabled: boolean) => {
   autoUpdatesEnabled = enabled;
 });
 
+// === OPEN AT LOGIN ===
+ipcMain.handle(IPC_CHANNELS.OPEN_AT_LOGIN_SET, (_, enabled: boolean): boolean => {
+  app.setLoginItemSettings({ openAtLogin: enabled });
+
+  return app.getLoginItemSettings().openAtLogin;
+});
+
+ipcMain.handle(IPC_CHANNELS.OPEN_AT_LOGIN_GET, (): boolean => app.getLoginItemSettings().openAtLogin);
+
 if (process.platform === 'win32') app.setAppUserModelId('MoveIt');
 
 // === APP LIFECYCLE ===

@@ -102,6 +102,7 @@
   "windowControls.trayNotification": "应用程序已最小化到系统托盘",
   "settings.showTrayMessage": "最小化到托盘时显示通知",
   "settings.autoUpdates": "启用自动更新",
+  "settings.openAtLogin": "登录时打开",
   "settings.checkForUpdates": "检查更新",
   "settings.updateAvailable": "有新更新可用",
   "updates.title": "更新可用",

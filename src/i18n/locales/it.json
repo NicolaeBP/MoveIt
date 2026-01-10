@@ -102,6 +102,7 @@
   "windowControls.trayNotification": "Applicazione minimizzata nella barra di sistema",
   "settings.showTrayMessage": "Mostra notifica quando minimizzo nella barra di sistema",
   "settings.autoUpdates": "Abilita aggiornamenti automatici",
+  "settings.openAtLogin": "Apri all'accesso",
   "settings.checkForUpdates": "Verifica aggiornamenti",
   "settings.updateAvailable": "Nuovo Aggiornamento Disponibile",
   "updates.title": "Aggiornamento disponibile",

@@ -102,6 +102,7 @@
   "windowControls.trayNotification": "Anwendung in die Systemleiste minimiert",
   "settings.showTrayMessage": "Benachrichtigung anzeigen beim Minimieren in die Systemleiste",
   "settings.autoUpdates": "Automatische Updates aktivieren",
+  "settings.openAtLogin": "Bei Anmeldung öffnen",
   "settings.checkForUpdates": "Nach Updates suchen",
   "settings.updateAvailable": "Neues Update Verfügbar",
   "updates.title": "Update verfügbar",

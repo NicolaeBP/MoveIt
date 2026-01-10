@@ -102,6 +102,7 @@
   "windowControls.trayNotification": "App minimized to system tray",
   "settings.showTrayMessage": "Show notification when minimizing to tray",
   "settings.autoUpdates": "Enable auto-updates",
+  "settings.openAtLogin": "Open at login",
   "settings.checkForUpdates": "Check for Updates",
   "settings.updateAvailable": "New Update Available",
   "updates.title": "Update Available",

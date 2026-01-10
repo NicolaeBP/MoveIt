@@ -12,6 +12,8 @@ const SettingsContent = () => {
   const setAutoUpdatesEnabled = useAppStore((state) => state.setAutoUpdatesEnabled);
   const isUpToDate = useAppStore((state) => state.isUpToDate);
   const setIsUpToDate = useAppStore((state) => state.setIsUpToDate);
+  const openAtLogin = useAppStore((state) => state.openAtLogin);
+  const setOpenAtLogin = useAppStore((state) => state.setOpenAtLogin);
 
   const isUpToDateRef = useRef(isUpToDate);
 
@@ -47,6 +49,17 @@ const SettingsContent = () => {
       if (isUpToDateRef.current === true) setIsUpToDate(null);
     };
   }, [setIsUpToDate]);
+
+  useEffect(() => {
+    globalThis.electronAPI.app.getOpenAtLogin().then(setOpenAtLogin);
+  }, [setOpenAtLogin]);
+
+  const handleOpenAtLoginChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const enabled = e.target.checked;
+    const result = await globalThis.electronAPI.app.setOpenAtLogin(enabled);
+
+    setOpenAtLogin(result);
+  };
 
   const getButtonTextId = (): string => {
     if (isCheckingForUpdates) return 'updates.checking';
@@ -95,6 +108,21 @@ const SettingsContent = () => {
 
           <span className="text-sm text-gray-700 dark:text-gray-300">
             <FormattedMessage id="settings.autoUpdates" />
+          </span>
+        </label>
+      </div>
+
+      <div className="mt-4">
+        <label className="flex items-center gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={openAtLogin}
+            onChange={handleOpenAtLoginChange}
+            className="w-4 h-4 text-blue-500 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+          />
+
+          <span className="text-sm text-gray-700 dark:text-gray-300">
+            <FormattedMessage id="settings.openAtLogin" />
           </span>
         </label>
       </div>

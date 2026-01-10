@@ -100,6 +100,7 @@
   "windowControls.trayNotification": "앱이 시스템 트레이로 최소화되었습니다",
   "settings.showTrayMessage": "트레이로 최소화할 때 알림 표시",
   "settings.autoUpdates": "자동 업데이트 활성화",
+  "settings.openAtLogin": "로그인 시 열기",
   "settings.checkForUpdates": "업데이트 확인",
   "updates.title": "업데이트 사용 가능",
   "updates.newVersionAvailable": "버전 {version} 사용 가능",

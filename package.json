@@ -1,6 +1,6 @@
 {
   "name": "moveit",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A modern Electron + React app that moves your mouse to prevent system sleep",
   "author": "Nicolae Balica",
   "license": "MIT",
@@ -159,7 +159,7 @@
         }
       ],
       "icon": "assets/icon.ico",
-      "artifactName": "${productName} Setup ${version}.${ext}"
+      "artifactName": "${productName}-Setup-${version}.${ext}"
     },
     "nsis": {
       "oneClick": false,

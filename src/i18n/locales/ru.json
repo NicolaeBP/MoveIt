@@ -102,6 +102,7 @@
   "windowControls.trayNotification": "Приложение свернуто в системный трей",
   "settings.showTrayMessage": "Показывать уведомление при сворачивании в трей",
   "settings.autoUpdates": "Включить автоматические обновления",
+  "settings.openAtLogin": "Открывать при входе",
   "settings.checkForUpdates": "Проверить обновления",
   "settings.updateAvailable": "Доступно Новое Обновление",
   "updates.title": "Доступно обновление",

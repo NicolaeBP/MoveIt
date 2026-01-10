@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { IntlProvider } from 'react-intl';
 import AppHeader from './AppHeader';
@@ -13,6 +13,16 @@ const wrapper = ({ children }: { children: React.ReactNode }) => (
 );
 
 describe('AppHeader', () => {
+  beforeEach(() => {
+    globalThis.electronAPI = {
+      ...globalThis.electronAPI,
+      app: {
+        getOpenAtLogin: vi.fn().mockResolvedValue(false),
+        setOpenAtLogin: vi.fn().mockResolvedValue(true),
+      },
+    };
+  });
+
   describe('when component renders', () => {
     it('displays app title', () => {
       useAppStore.setState({ openModal: vi.fn(), closeModal: vi.fn() });

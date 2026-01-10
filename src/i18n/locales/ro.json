@@ -102,6 +102,7 @@
   "windowControls.trayNotification": "Aplicația a fost minimizată în bara de sistem",
   "settings.showTrayMessage": "Afișează notificare când minimizez în bara de sistem",
   "settings.autoUpdates": "Activează actualizări automate",
+  "settings.openAtLogin": "Deschide la autentificare",
   "settings.checkForUpdates": "Verifică actualizări",
   "settings.updateAvailable": "Actualizare Nouă Disponibilă",
   "updates.title": "Actualizare disponibilă",

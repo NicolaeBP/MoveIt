@@ -102,6 +102,7 @@
   "windowControls.trayNotification": "Aplicación minimizada a la bandeja del sistema",
   "settings.showTrayMessage": "Mostrar notificación al minimizar a la bandeja",
   "settings.autoUpdates": "Habilitar actualizaciones automáticas",
+  "settings.openAtLogin": "Abrir al iniciar sesión",
   "settings.checkForUpdates": "Buscar actualizaciones",
   "settings.updateAvailable": "Nueva Actualización Disponible",
   "updates.title": "Actualización disponible",

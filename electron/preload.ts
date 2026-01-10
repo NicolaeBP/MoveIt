@@ -53,6 +53,10 @@ const electronAPI = {
       return () => ipcRenderer.removeListener(IPC_CHANNELS.SET_IS_UP_TO_DATE, listener);
     },
   },
+  app: {
+    setOpenAtLogin: (enabled: boolean): Promise<boolean> => ipcRenderer.invoke(IPC_CHANNELS.OPEN_AT_LOGIN_SET, enabled),
+    getOpenAtLogin: (): Promise<boolean> => ipcRenderer.invoke(IPC_CHANNELS.OPEN_AT_LOGIN_GET),
+  },
 };
 
 contextBridge.exposeInMainWorld('electronAPI', electronAPI);

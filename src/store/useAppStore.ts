@@ -18,6 +18,7 @@ export interface AppStore {
   movementStatus: MovementStatus;
   autoUpdatesEnabled: boolean;
   isUpToDate: boolean | null;
+  openAtLogin: boolean;
   setInterval: (interval: number) => void;
   openModal: (content: ModalContent) => void;
   closeModal: () => void;
@@ -27,6 +28,7 @@ export interface AppStore {
   setMovementStatus: (status: 'moving' | 'waiting' | 'stopped') => void;
   setAutoUpdatesEnabled: (enabled: boolean) => void;
   setIsUpToDate: (isUpToDate: boolean | null) => void;
+  setOpenAtLogin: (enabled: boolean) => void;
 }
 
 export const useAppStore = create<AppStore>()(
@@ -40,6 +42,7 @@ export const useAppStore = create<AppStore>()(
       movementStatus: 'stopped' as 'moving' | 'waiting' | 'stopped',
       autoUpdatesEnabled: true,
       isUpToDate: null,
+      openAtLogin: false,
 
       setInterval: (interval) => set({ interval }),
       openModal: (content) => set({ modalContent: content }),
@@ -53,6 +56,7 @@ export const useAppStore = create<AppStore>()(
       setMovementStatus: (status) => set({ movementStatus: status }),
       setAutoUpdatesEnabled: (enabled) => set({ autoUpdatesEnabled: enabled }),
       setIsUpToDate: (isUpToDate) => set({ isUpToDate }),
+      setOpenAtLogin: (enabled) => set({ openAtLogin: enabled }),
     }),
     {
       name: 'moveit-storage',

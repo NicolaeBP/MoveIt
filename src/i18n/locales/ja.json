@@ -102,6 +102,7 @@
   "windowControls.trayNotification": "アプリがシステムトレイに最小化されました",
   "settings.showTrayMessage": "トレイに最小化するときに通知を表示",
   "settings.autoUpdates": "自動更新を有効にする",
+  "settings.openAtLogin": "ログイン時に開く",
   "settings.checkForUpdates": "更新を確認",
   "updates.title": "更新が利用可能",
   "updates.newVersionAvailable": "バージョン {version} が利用可能です",

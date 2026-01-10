@@ -13,6 +13,8 @@ export const IPC_CHANNELS = {
   UPDATE_AUTO_ENABLED_CHANGED: 'update:auto-enabled-changed',
   UPDATE_DOWNLOADED: 'update:downloaded',
   SET_IS_UP_TO_DATE: 'update:set-is-up-to-date',
+  OPEN_AT_LOGIN_SET: 'app:open-at-login-set',
+  OPEN_AT_LOGIN_GET: 'app:open-at-login-get',
 } as const;
 
 export const DEV_SERVER_PORT = 5173;

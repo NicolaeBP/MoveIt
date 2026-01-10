@@ -21,6 +21,8 @@ describe('SettingsContent', () => {
       setAutoUpdatesEnabled: vi.fn(),
       isUpToDate: null,
       setIsUpToDate: vi.fn(),
+      openAtLogin: false,
+      setOpenAtLogin: vi.fn(),
     });
 
     globalThis.electronAPI = {
@@ -29,6 +31,10 @@ describe('SettingsContent', () => {
         ...globalThis.electronAPI.updates,
         checkForUpdates: vi.fn().mockResolvedValue(undefined),
         notifyAutoUpdatesChanged: vi.fn(),
+      },
+      app: {
+        getOpenAtLogin: vi.fn().mockResolvedValue(false),
+        setOpenAtLogin: vi.fn().mockResolvedValue(true),
       },
     };
   });
@@ -157,6 +163,89 @@ describe('SettingsContent', () => {
       fireEvent.click(autoUpdatesCheckbox);
 
       expect(notifyMock).toHaveBeenCalledWith(true);
+    });
+  });
+
+  describe('when open at login checkbox is rendered', () => {
+    it('shows open at login checkbox with label', () => {
+      render(<SettingsContent />, { wrapper });
+
+      expect(screen.getByText(messages.en['settings.openAtLogin'])).toBeInTheDocument();
+    });
+
+    it('fetches initial state from electronAPI on mount', async () => {
+      const getOpenAtLoginMock = vi.fn().mockResolvedValue(true);
+      globalThis.electronAPI.app.getOpenAtLogin = getOpenAtLoginMock;
+
+      render(<SettingsContent />, { wrapper });
+
+      await waitFor(() => {
+        expect(getOpenAtLoginMock).toHaveBeenCalledOnce();
+      });
+    });
+
+    it('reflects openAtLogin state when checked', () => {
+      useAppStore.setState({ openAtLogin: true });
+
+      render(<SettingsContent />, { wrapper });
+
+      const checkboxes = screen.getAllByRole('checkbox');
+      const openAtLoginCheckbox = checkboxes[2] as HTMLInputElement;
+
+      expect(openAtLoginCheckbox.checked).toBe(true);
+    });
+
+    it('reflects openAtLogin state when unchecked', () => {
+      useAppStore.setState({ openAtLogin: false });
+
+      render(<SettingsContent />, { wrapper });
+
+      const checkboxes = screen.getAllByRole('checkbox');
+      const openAtLoginCheckbox = checkboxes[2] as HTMLInputElement;
+
+      expect(openAtLoginCheckbox.checked).toBe(false);
+    });
+  });
+
+  describe('when open at login checkbox is clicked', () => {
+    it('calls electronAPI.app.setOpenAtLogin with toggled value', async () => {
+      const setOpenAtLoginMock = vi.fn().mockResolvedValue(true);
+      globalThis.electronAPI.app.setOpenAtLogin = setOpenAtLoginMock;
+
+      useAppStore.setState({ openAtLogin: false });
+
+      render(<SettingsContent />, { wrapper });
+
+      const checkboxes = screen.getAllByRole('checkbox');
+      const openAtLoginCheckbox = checkboxes[2];
+
+      fireEvent.click(openAtLoginCheckbox);
+
+      await waitFor(() => {
+        expect(setOpenAtLoginMock).toHaveBeenCalledWith(true);
+      });
+    });
+
+    it('updates store state with result from electronAPI', async () => {
+      const setOpenAtLoginStoreMock = vi.fn();
+      const setOpenAtLoginApiMock = vi.fn().mockResolvedValue(true);
+
+      globalThis.electronAPI.app.setOpenAtLogin = setOpenAtLoginApiMock;
+      useAppStore.setState({
+        openAtLogin: false,
+        setOpenAtLogin: setOpenAtLoginStoreMock,
+      });
+
+      render(<SettingsContent />, { wrapper });
+
+      const checkboxes = screen.getAllByRole('checkbox');
+      const openAtLoginCheckbox = checkboxes[2];
+
+      fireEvent.click(openAtLoginCheckbox);
+
+      await waitFor(() => {
+        expect(setOpenAtLoginStoreMock).toHaveBeenCalledWith(true);
+      });
     });
   });
 
