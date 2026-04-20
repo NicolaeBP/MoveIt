@@ -14,9 +14,10 @@ import {
 
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import { createRequire } from 'module';
 import { existsSync } from 'fs';
 import { mouse } from '@nut-tree-fork/nut-js';
-import type { ScheduleConfig } from '../shared/types';
+import type { ScheduleConfig, UinputAddon } from '../shared/types';
 import electronUpdater from 'electron-updater';
 import log from 'electron-log';
 
@@ -38,6 +39,32 @@ import { getNextMoveStartTime } from './utils';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const require = createRequire(import.meta.url);
+
+// Wayland uinput support
+const isWayland = process.platform === PLATFORMS.LINUX &&
+  (process.env.XDG_SESSION_TYPE === 'wayland' || process.env.WAYLAND_DISPLAY !== undefined);
+
+let uinputAddon: UinputAddon | null = null;
+let movementDirection = 1;
+
+if (isWayland) {
+  try {
+    const addonPath = app.isPackaged
+      ? join(process.resourcesPath, 'app.asar.unpacked', 'native', 'uinput')
+      : join(__dirname, '..', 'native', 'uinput');
+
+    uinputAddon = require(addonPath);
+
+    if (uinputAddon && !uinputAddon.init()) {
+      log.warn('uinput init failed, falling back to nut-js');
+      uinputAddon = null;
+    }
+  } catch (error) {
+    log.warn('Failed to load uinput addon:', error);
+    uinputAddon = null;
+  }
+}
 
 // Application state
 let mainApplicationWindow: BrowserWindow | null = null;
@@ -120,6 +147,11 @@ app.on(ELECTRON_EVENTS.WINDOW_ALL_CLOSED, () => process.platform !== PLATFORMS.D
 
 app.on(ELECTRON_EVENTS.BEFORE_QUIT, () => {
   stopMovementCycle();
+
+  if (uinputAddon) {
+    uinputAddon.destroy();
+    uinputAddon = null;
+  }
 
   if (systemTray && !systemTray.isDestroyed()) {
     systemTray.destroy();
@@ -433,6 +465,17 @@ const scheduleNextAction = (phase: string, startTime: number) => {
 
 const performMouseMovement = async () => {
   if (!currentIntervalMs) return;
+
+  if (uinputAddon) {
+    try {
+      uinputAddon.moveRelative(movementDirection * MOUSE_MOVEMENT_PIXELS, 0);
+      movementDirection *= -1;
+    } catch (error) {
+      log.error('uinput move failed:', error);
+    }
+
+    return;
+  }
 
   try {
     const currentPos = await mouse.getPosition();

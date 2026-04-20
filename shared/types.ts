@@ -14,3 +14,10 @@ export interface ScheduleEntry {
 export type ScheduleConfig = ScheduleEntry[];
 
 export type WeekDay = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday';
+
+export interface UinputAddon {
+  init: () => boolean;
+  moveRelative: (dx: number, dy: number) => boolean;
+  destroy: () => void;
+  isInitialized: () => boolean;
+}

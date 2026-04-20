@@ -1,0 +1,10 @@
+{
+  "name": "moveit-uinput",
+  "version": "1.0.0",
+  "private": true,
+  "description": "N-API addon for uinput mouse movement on Linux Wayland",
+  "main": "index.js",
+  "scripts": {
+    "install": "node-gyp rebuild"
+  }
+}

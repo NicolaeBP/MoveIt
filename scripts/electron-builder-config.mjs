@@ -17,8 +17,8 @@ const config = {
     output: 'release',
     buildResources: 'build',
   },
-  files: ['dist/**/*', 'assets/**/*', 'package.json', 'node_modules/**/*'],
-  asarUnpack: ['**/*.node', '**/node_modules/bindings/**', '**/node_modules/@nut-tree-fork/**'],
+  files: ['dist/**/*', 'assets/**/*', 'package.json', 'node_modules/**/*', 'native/**/*'],
+  asarUnpack: ['**/*.node', '**/node_modules/bindings/**', '**/node_modules/@nut-tree-fork/**', '**/native/uinput/**'],
   mac: {
     category: 'public.app-category.utilities',
     target: ['dmg', 'zip'],
@@ -74,6 +74,8 @@ const config = {
     packageName: 'MoveIt',
     synopsis: 'Professional mouse automation tool',
     description: 'Keep your system active during presentations, testing, and remote sessions. Features smart scheduling, multilingual support, and a clean modern interface.',
+    afterInstall: 'scripts/afterInstall.sh',
+    afterRemove: 'scripts/afterRemove.sh',
   },
 };
 
