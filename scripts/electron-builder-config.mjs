@@ -72,7 +72,8 @@ const config = {
     depends: ['libfuse2'],
     maintainer: 'Nicolae Balica <nicolaebalica@bpconsulting.pro>',
     packageName: 'MoveIt',
-    description: 'Professional mouse automation tool with smart scheduling, multilingual support, and a clean modern interface. Keep your system active during presentations, testing, and remote sessions.',
+    synopsis: 'Professional mouse automation tool',
+    description: 'Keep your system active during presentations, testing, and remote sessions. Features smart scheduling, multilingual support, and a clean modern interface.',
   },
 };
 
