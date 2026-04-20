@@ -73,7 +73,6 @@ const config = {
     maintainer: 'Nicolae Balica <nicolaebalica@bpconsulting.pro>',
     packageName: 'MoveIt',
     description: 'Professional mouse automation tool with smart scheduling, multilingual support, and a clean modern interface. Keep your system active during presentations, testing, and remote sessions.',
-    license: 'MIT',
   },
 };
 
