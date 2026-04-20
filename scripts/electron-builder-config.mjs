@@ -64,8 +64,16 @@ const config = {
     shortcutName: 'MoveIt',
   },
   linux: {
-    target: 'AppImage',
+    target: ['AppImage', 'deb'],
     icon: 'assets/icon.png',
+    category: 'Utility',
+  },
+  deb: {
+    depends: ['libfuse2'],
+    maintainer: 'Nicolae Balica <nicolaebalica@bpconsulting.pro>',
+    packageName: 'MoveIt',
+    description: 'Professional mouse automation tool with smart scheduling, multilingual support, and a clean modern interface. Keep your system active during presentations, testing, and remote sessions.',
+    license: 'MIT',
   },
 };
 
