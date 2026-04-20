@@ -18,6 +18,7 @@ const config = {
     buildResources: 'build',
   },
   files: ['dist/**/*', 'assets/**/*', 'package.json', 'node_modules/**/*'],
+  asarUnpack: ['**/*.node', '**/node_modules/bindings/**', '**/node_modules/@nut-tree-fork/**'],
   mac: {
     category: 'public.app-category.utilities',
     target: ['dmg', 'zip'],
