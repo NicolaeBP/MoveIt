@@ -42,6 +42,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const require = createRequire(import.meta.url);
 
+// AppImage doesn't have SUID chrome-sandbox, so disable sandbox for it
+if (process.env.APPIMAGE) {
+  app.commandLine.appendSwitch('no-sandbox');
+}
+
 // Wayland uinput support
 const isWayland = process.platform === PLATFORMS.LINUX &&
   (process.env.XDG_SESSION_TYPE === 'wayland' || process.env.WAYLAND_DISPLAY !== undefined);
