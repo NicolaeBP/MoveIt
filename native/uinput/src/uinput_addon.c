@@ -4,6 +4,8 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdio.h>
+#include <errno.h>
 #include <sys/ioctl.h>
 #include <time.h>
 
@@ -36,14 +38,27 @@ static napi_value Init(napi_env env, napi_callback_info info) {
 
   uinput_fd = open("/dev/uinput", O_WRONLY | O_NONBLOCK);
   if (uinput_fd < 0) {
+    fprintf(stderr, "uinput: open failed: %s\n", strerror(errno));
     napi_get_boolean(env, false, &result);
     return result;
   }
 
-  if (ioctl(uinput_fd, UI_SET_EVBIT, EV_REL) < 0) goto fail;
-  if (ioctl(uinput_fd, UI_SET_RELBIT, REL_X) < 0) goto fail;
-  if (ioctl(uinput_fd, UI_SET_RELBIT, REL_Y) < 0) goto fail;
-  if (ioctl(uinput_fd, UI_SET_EVBIT, EV_SYN) < 0) goto fail;
+  if (ioctl(uinput_fd, UI_SET_EVBIT, EV_REL) < 0) {
+    fprintf(stderr, "uinput: UI_SET_EVBIT EV_REL failed: %s\n", strerror(errno));
+    goto fail;
+  }
+  if (ioctl(uinput_fd, UI_SET_RELBIT, REL_X) < 0) {
+    fprintf(stderr, "uinput: UI_SET_RELBIT REL_X failed: %s\n", strerror(errno));
+    goto fail;
+  }
+  if (ioctl(uinput_fd, UI_SET_RELBIT, REL_Y) < 0) {
+    fprintf(stderr, "uinput: UI_SET_RELBIT REL_Y failed: %s\n", strerror(errno));
+    goto fail;
+  }
+  if (ioctl(uinput_fd, UI_SET_EVBIT, EV_SYN) < 0) {
+    fprintf(stderr, "uinput: UI_SET_EVBIT EV_SYN failed: %s\n", strerror(errno));
+    goto fail;
+  }
 
   struct uinput_setup usetup;
   memset(&usetup, 0, sizeof(usetup));
@@ -52,9 +67,16 @@ static napi_value Init(napi_env env, napi_callback_info info) {
   usetup.id.product = 0x5678;
   strcpy(usetup.name, "MoveIt Virtual Mouse");
 
-  if (ioctl(uinput_fd, UI_DEV_SETUP, &usetup) < 0) goto fail;
-  if (ioctl(uinput_fd, UI_DEV_CREATE) < 0) goto fail;
+  if (ioctl(uinput_fd, UI_DEV_SETUP, &usetup) < 0) {
+    fprintf(stderr, "uinput: UI_DEV_SETUP failed: %s\n", strerror(errno));
+    goto fail;
+  }
+  if (ioctl(uinput_fd, UI_DEV_CREATE) < 0) {
+    fprintf(stderr, "uinput: UI_DEV_CREATE failed: %s\n", strerror(errno));
+    goto fail;
+  }
 
+  fprintf(stderr, "uinput: device created successfully (fd=%d)\n", uinput_fd);
   usleep(200000);
 
   napi_get_boolean(env, true, &result);
