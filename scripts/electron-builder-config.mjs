@@ -1,8 +1,6 @@
 /* global process */
-/**
- * electron-builder configuration
- * Main configuration for packaging the application
- */
+import { unlinkSync } from 'fs';
+import { join } from 'path';
 
 /**
  * electron-builder configuration
@@ -67,6 +65,15 @@ const config = {
     target: ['AppImage', 'deb'],
     icon: 'assets/icon.png',
     category: 'Utility',
+  },
+  afterPack(context) {
+    if (context.electronPlatformName === 'linux') {
+      try {
+        unlinkSync(join(context.appOutDir, 'chrome-sandbox'));
+      } catch {
+        // Already absent
+      }
+    }
   },
   deb: {
     depends: ['libfuse2'],

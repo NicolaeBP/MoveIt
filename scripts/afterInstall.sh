@@ -20,12 +20,6 @@ if [ ! -f /etc/modules-load.d/moveit-uinput.conf ]; then
   echo "uinput" > /etc/modules-load.d/moveit-uinput.conf
 fi
 
-# Set SUID bit on chrome-sandbox for proper Electron sandboxing
-if [ -f /opt/MoveIt/chrome-sandbox ]; then
-  chown root:root /opt/MoveIt/chrome-sandbox
-  chmod 4755 /opt/MoveIt/chrome-sandbox
-fi
-
 # Reload udev rules
 udevadm control --reload-rules 2>/dev/null || true
 udevadm trigger --subsystem-match=misc 2>/dev/null || true
