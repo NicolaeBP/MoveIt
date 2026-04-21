@@ -99,7 +99,7 @@ exec "\${SCRIPT_DIR}/${execName}.bin" \${SANDBOX_FLAG} "$@"
     }
   },
   deb: {
-    depends: ['libfuse2'],
+    depends: [],
     maintainer: 'Nicolae Balica <nicolaebalica@bpconsulting.pro>',
     packageName: 'MoveIt',
     synopsis: 'Professional mouse automation tool',
