@@ -43,22 +43,18 @@ static napi_value Init(napi_env env, napi_callback_info info) {
     return result;
   }
 
-  if (ioctl(uinput_fd, UI_SET_EVBIT, EV_REL) < 0) {
-    fprintf(stderr, "uinput: UI_SET_EVBIT EV_REL failed: %s\n", strerror(errno));
-    goto fail;
-  }
-  if (ioctl(uinput_fd, UI_SET_RELBIT, REL_X) < 0) {
-    fprintf(stderr, "uinput: UI_SET_RELBIT REL_X failed: %s\n", strerror(errno));
-    goto fail;
-  }
-  if (ioctl(uinput_fd, UI_SET_RELBIT, REL_Y) < 0) {
-    fprintf(stderr, "uinput: UI_SET_RELBIT REL_Y failed: %s\n", strerror(errno));
-    goto fail;
-  }
-  if (ioctl(uinput_fd, UI_SET_EVBIT, EV_SYN) < 0) {
-    fprintf(stderr, "uinput: UI_SET_EVBIT EV_SYN failed: %s\n", strerror(errno));
-    goto fail;
-  }
+  /* Enable relative movement events */
+  if (ioctl(uinput_fd, UI_SET_EVBIT, EV_REL) < 0) goto fail;
+  if (ioctl(uinput_fd, UI_SET_RELBIT, REL_X) < 0) goto fail;
+  if (ioctl(uinput_fd, UI_SET_RELBIT, REL_Y) < 0) goto fail;
+
+  /* Enable key/button events so the device is recognized as a mouse */
+  if (ioctl(uinput_fd, UI_SET_EVBIT, EV_KEY) < 0) goto fail;
+  if (ioctl(uinput_fd, UI_SET_KEYBIT, BTN_LEFT) < 0) goto fail;
+  if (ioctl(uinput_fd, UI_SET_KEYBIT, BTN_RIGHT) < 0) goto fail;
+
+  /* Synchronization events */
+  if (ioctl(uinput_fd, UI_SET_EVBIT, EV_SYN) < 0) goto fail;
 
   struct uinput_setup usetup;
   memset(&usetup, 0, sizeof(usetup));
@@ -77,7 +73,7 @@ static napi_value Init(napi_env env, napi_callback_info info) {
   }
 
   fprintf(stderr, "uinput: device created successfully (fd=%d)\n", uinput_fd);
-  usleep(200000);
+  usleep(500000);
 
   napi_get_boolean(env, true, &result);
   return result;
