@@ -56,6 +56,11 @@ static napi_value Init(napi_env env, napi_callback_info info) {
   /* Synchronization events */
   if (ioctl(uinput_fd, UI_SET_EVBIT, EV_SYN) < 0) goto fail;
 
+  /* Mark as pointer device so libinput/Wayland treats it as a mouse */
+  if (ioctl(uinput_fd, UI_SET_PROPBIT, INPUT_PROP_POINTER) < 0) {
+    fprintf(stderr, "uinput: UI_SET_PROPBIT INPUT_PROP_POINTER failed: %s\n", strerror(errno));
+  }
+
   struct uinput_setup usetup;
   memset(&usetup, 0, sizeof(usetup));
   usetup.id.bustype = BUS_USB;

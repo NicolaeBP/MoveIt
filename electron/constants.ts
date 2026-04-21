@@ -70,4 +70,6 @@ export const TRAY_ICON_SIZE = { width: 16, height: 16 } as const;
 
 export const MOUSE_MOVEMENT_PIXELS = 1;
 
+export const UINPUT_MOVEMENT_PIXELS = 10;
+
 export const SMART_MOUSE_MOVER = 'MoveIt';

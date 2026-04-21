@@ -33,6 +33,7 @@ import {
   SMART_MOUSE_MOVER,
   TRAY_ICON_SIZE,
   MOUSE_MOVEMENT_PIXELS,
+  UINPUT_MOVEMENT_PIXELS,
 } from './constants';
 import { MS_PER_HOUR, MS_PER_MINUTE, MS_PER_SECOND } from './timeConstants';
 import { getNextMoveStartTime } from './utils';
@@ -268,9 +269,13 @@ powerMonitor.on('resume', () => {
 });
 
 const createMainApplicationWindow = () => {
+  const isLinux = process.platform === PLATFORMS.LINUX;
+
   mainApplicationWindow = new BrowserWindow({
     ...APP_CONFIG.WINDOW_DIMENSIONS,
     ...WINDOW_CONFIG,
+    // Transparent frameless windows don't render on Wayland
+    transparent: isLinux ? false : WINDOW_CONFIG.transparent,
     webPreferences: {
       ...WINDOW_CONFIG.webPreferences,
       preload: join(__dirname, PATHS.PRELOAD),
@@ -468,7 +473,7 @@ const performMouseMovement = async () => {
 
   if (uinputAddon) {
     try {
-      uinputAddon.moveRelative(movementDirection * MOUSE_MOVEMENT_PIXELS, 0);
+      uinputAddon.moveRelative(movementDirection * UINPUT_MOVEMENT_PIXELS, 0);
       movementDirection *= -1;
     } catch (error) {
       log.error('uinput move failed:', error);
