@@ -1,5 +1,5 @@
 /* global process */
-import { unlinkSync } from 'fs';
+import { unlinkSync, renameSync, writeFileSync, chmodSync } from 'fs';
 import { join } from 'path';
 
 /**
@@ -67,12 +67,38 @@ const config = {
     category: 'Utility',
   },
   afterPack(context) {
-    if (context.electronPlatformName === 'linux') {
-      try {
-        unlinkSync(join(context.appOutDir, 'chrome-sandbox'));
-      } catch {
-        // Already absent
-      }
+    if (context.electronPlatformName !== 'linux') return;
+
+    const execName = 'MoveIt';
+    const execPath = join(context.appOutDir, execName);
+    const binPath = join(context.appOutDir, `${execName}.bin`);
+
+    renameSync(execPath, binPath);
+
+    const wrapper = `#!/bin/bash
+SCRIPT_DIR="$(dirname "$(readlink -f "\${BASH_SOURCE[0]}")")"
+
+SANDBOX_FLAG=""
+if [ -f /proc/sys/kernel/unprivileged_userns_clone ]; then
+  if [ "$(cat /proc/sys/kernel/unprivileged_userns_clone)" = "0" ]; then
+    SANDBOX_FLAG="--no-sandbox"
+  fi
+elif [ -f /proc/sys/kernel/apparmor_restrict_unprivileged_userns ]; then
+  if [ "$(cat /proc/sys/kernel/apparmor_restrict_unprivileged_userns)" = "1" ]; then
+    SANDBOX_FLAG="--no-sandbox"
+  fi
+fi
+
+exec "\${SCRIPT_DIR}/${execName}.bin" \${SANDBOX_FLAG} "$@"
+`;
+
+    writeFileSync(execPath, wrapper);
+    chmodSync(execPath, '755');
+
+    try {
+      unlinkSync(join(context.appOutDir, 'chrome-sandbox'));
+    } catch {
+      // Already absent
     }
   },
   deb: {
@@ -80,7 +106,8 @@ const config = {
     maintainer: 'Nicolae Balica <nicolaebalica@bpconsulting.pro>',
     packageName: 'MoveIt',
     synopsis: 'Professional mouse automation tool',
-    description: 'Keep your system active during presentations, testing, and remote sessions. Features smart scheduling, multilingual support, and a clean modern interface.',
+    description:
+      'Keep your system active during presentations, testing, and remote sessions. Features smart scheduling, multilingual support, and a clean modern interface.',
     afterInstall: 'scripts/afterInstall.sh',
     afterRemove: 'scripts/afterRemove.sh',
   },
