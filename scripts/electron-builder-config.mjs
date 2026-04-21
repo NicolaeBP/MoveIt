@@ -79,14 +79,11 @@ const config = {
 SCRIPT_DIR="$(dirname "$(readlink -f "\${BASH_SOURCE[0]}")")"
 
 SANDBOX_FLAG=""
-if [ -f /proc/sys/kernel/unprivileged_userns_clone ]; then
-  if [ "$(cat /proc/sys/kernel/unprivileged_userns_clone)" = "0" ]; then
-    SANDBOX_FLAG="--no-sandbox"
-  fi
-elif [ -f /proc/sys/kernel/apparmor_restrict_unprivileged_userns ]; then
-  if [ "$(cat /proc/sys/kernel/apparmor_restrict_unprivileged_userns)" = "1" ]; then
-    SANDBOX_FLAG="--no-sandbox"
-  fi
+if [ -f /proc/sys/kernel/unprivileged_userns_clone ] && [ "$(cat /proc/sys/kernel/unprivileged_userns_clone)" = "0" ]; then
+  SANDBOX_FLAG="--no-sandbox"
+fi
+if [ -f /proc/sys/kernel/apparmor_restrict_unprivileged_userns ] && [ "$(cat /proc/sys/kernel/apparmor_restrict_unprivileged_userns)" = "1" ]; then
+  SANDBOX_FLAG="--no-sandbox"
 fi
 
 exec "\${SCRIPT_DIR}/${execName}.bin" \${SANDBOX_FLAG} "$@"
